@@ -1,0 +1,10 @@
+{
+  "description": "Track purchase prices and store inventory with expiration dates while comparing market locations on a map to find the best deals over time.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
