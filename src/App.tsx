@@ -1,5 +1,14 @@
 import { useState, createContext, useContext } from "react"
 import type { ReactNode } from "react"
+import { MARKETS } from "@/mocks/MARKETS"
+import { MONTHS } from "@/mocks/MONTHS"
+import { PRICE_DATA } from "@/mocks/PRICE_DATA"
+import { SEASONAL_HINTS } from "@/mocks/SEASONAL_HINTS"
+import { SHOPPING_INIT } from "@/mocks/SHOPPING_INIT"
+import { STOCK_INIT } from "@/mocks/STOCK_INIT"
+import type { Market } from "@/interfaces/Market"
+import type { StockItem } from "@/interfaces/StockItem"
+import type { ShoppingItem } from "@/interfaces/ShoppingItem"
 
 const DarkCtx = createContext(false)
 const useDark = () => useContext(DarkCtx)
@@ -26,96 +35,7 @@ import logoCompleto from "@/imports/Logo_Completo.png"
 
 // ─── TYPES ────────────────────────────────────────────────────────────────────
 
-interface Market {
-  id: string
-  name: string
-  address: string
-  distance: number
-  priceIndex: number
-  type: string
-  x: number
-  y: number
-  rating: number
-  registros: number
-}
-
-interface ShoppingItem {
-  id: string
-  name: string
-  qty: string
-  unit: string
-  price: number | null
-  checked: boolean
-  category: string
-  market?: string
-}
-
-interface StockItem {
-  id: string
-  name: string
-  qty: string
-  unit: string
-  expiry: string
-  category: string
-  purchasePrice: number
-  market: string
-}
-
 // ─── MOCK DATA ─────────────────────────────────────────────────────────────────
-
-const MARKETS: Market[] = [
-  { id: "1", name: "Supermercado Bom Preço", address: "Av. Brasil, 1200", distance: 0.8, priceIndex: 62, type: "Supermercado", x: 33, y: 40, rating: 4.2, registros: 47 },
-  { id: "2", name: "Feira Livre Central", address: "Rua das Flores, s/n", distance: 1.2, priceIndex: 41, type: "Feira", x: 63, y: 26, rating: 4.7, registros: 83 },
-  { id: "3", name: "Atacadão Sul", address: "Rod. BR-101, km 45", distance: 4.5, priceIndex: 35, type: "Atacado", x: 78, y: 66, rating: 4.0, registros: 112 },
-  { id: "4", name: "Mercadinho do Bairro", address: "Rua XV de Novembro, 88", distance: 0.3, priceIndex: 78, type: "Mercado", x: 20, y: 56, rating: 3.8, registros: 29 },
-  { id: "5", name: "Hortifruti Verde Vida", address: "Alameda dos Ipês, 340", distance: 2.1, priceIndex: 48, type: "Hortifruti", x: 48, y: 72, rating: 4.5, registros: 61 },
-]
-
-const MONTHS = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago"]
-
-const PRICE_DATA: Record<string, Record<string, number[]>> = {
-  "Arroz 5kg": {
-    "Bom Preço":  [28.90, 29.50, 31.20, 30.00, 28.50, 27.90, 29.00, 30.50],
-    "Atacadão":   [24.50, 24.80, 26.00, 25.50, 24.00, 23.50, 24.20, 25.80],
-    "Mercadinho": [31.00, 31.50, 33.00, 32.00, 30.00, 29.50, 30.80, 32.50],
-  },
-  "Feijão Carioca 1kg": {
-    "Bom Preço":  [7.90, 8.20, 9.50, 11.20, 10.80, 9.40, 8.90, 8.60],
-    "Atacadão":   [6.80, 7.10, 8.40, 10.00, 9.50, 8.20, 7.80, 7.50],
-    "Feira":      [5.50, 5.80, 7.20, 8.80,  8.20, 7.00, 6.50, 6.20],
-  },
-  "Tomate (kg)": {
-    "Bom Preço":  [4.50, 5.20, 8.90, 12.40, 9.80, 5.60, 4.20, 3.80],
-    "Feira":      [3.20, 3.80, 7.50, 10.20, 8.00, 4.50, 3.00, 2.80],
-    "Hortifruti": [3.80, 4.20, 8.00, 11.00, 8.50, 4.80, 3.50, 3.20],
-  },
-}
-
-const SEASONAL_HINTS: Record<string, string> = {
-  "Arroz 5kg": "Preço sobe em março. Estoque em janeiro ou compre no Atacadão para economizar até 16%.",
-  "Feijão Carioca 1kg": "Alta após a entressafra (abril–maio). Melhor comprar em quantidade em fevereiro ou agosto.",
-  "Tomate (kg)": "Tomate dispara no inverno (abr–mai). Feiras costumam ter até 30% mais barato que supermercados.",
-}
-
-const SHOPPING_INIT: ShoppingItem[] = [
-  { id: "1", name: "Arroz", qty: "5", unit: "kg", price: 28.90, checked: false, category: "Grãos", market: "Atacadão Sul" },
-  { id: "2", name: "Feijão Carioca", qty: "1", unit: "kg", price: 7.90, checked: false, category: "Grãos", market: "Atacadão Sul" },
-  { id: "3", name: "Tomate", qty: "1", unit: "kg", price: 4.50, checked: true, category: "Hortifruti", market: "Feira Livre Central" },
-  { id: "4", name: "Frango", qty: "2", unit: "kg", price: 19.80, checked: false, category: "Carnes", market: undefined },
-  { id: "5", name: "Leite Integral", qty: "6", unit: "un", price: 5.20, checked: true, category: "Laticínios", market: "Supermercado Bom Preço" },
-  { id: "6", name: "Pão de Forma", qty: "1", unit: "un", price: 8.50, checked: false, category: "Padaria", market: "Supermercado Bom Preço" },
-  { id: "7", name: "Banana", qty: "1", unit: "kg", price: 3.20, checked: false, category: "Hortifruti", market: "Feira Livre Central" },
-]
-
-const STOCK_INIT: StockItem[] = [
-  { id: "1", name: "Arroz", qty: "3", unit: "kg", expiry: "2026-10-15", category: "Grãos", purchasePrice: 28.90, market: "Bom Preço" },
-  { id: "2", name: "Feijão", qty: "0,5", unit: "kg", expiry: "2026-09-05", category: "Grãos", purchasePrice: 7.90, market: "Feira Central" },
-  { id: "3", name: "Azeite", qty: "1", unit: "un", expiry: "2025-12-31", category: "Condimentos", purchasePrice: 32.50, market: "Atacadão" },
-  { id: "4", name: "Macarrão", qty: "2", unit: "un", expiry: "2026-08-30", category: "Massas", purchasePrice: 4.50, market: "Bom Preço" },
-  { id: "5", name: "Leite em Pó", qty: "1", unit: "un", expiry: "2026-11-20", category: "Laticínios", purchasePrice: 29.80, market: "Atacadão" },
-  { id: "6", name: "Molho de Tomate", qty: "3", unit: "un", expiry: "2026-08-26", category: "Enlatados", purchasePrice: 3.80, market: "Mercadinho" },
-  { id: "7", name: "Café Torrado", qty: "1", unit: "un", expiry: "2025-08-10", category: "Bebidas", purchasePrice: 18.90, market: "Bom Preço" },
-]
 
 // ─── UTILS ─────────────────────────────────────────────────────────────────────
 
