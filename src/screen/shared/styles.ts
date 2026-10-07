@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react"
 
 import type { dmPalette } from "@/theme"
+
 import { priceColor } from "@/screen/Map/marketUtils"
 
 type Palette = ReturnType<typeof dmPalette>
@@ -8,14 +9,40 @@ type Palette = ReturnType<typeof dmPalette>
 const communityBackground = {
   background: "var(--color-teal-light)",
 } satisfies CSSProperties
+
 const communityText = { color: "#2c6460" } satisfies CSSProperties
 
 // Shared layout and typography patterns. Keep complete Tailwind class names.
 
 export const sharedClasses = {
+  priceSummaryCard: "rounded-2xl p-3 border",
+
+  priceSummaryLabel: "text-[10px] font-semibold",
+
+  priceSummaryMarket: "font-bold text-sm mt-1 truncate",
+
+  priceSummaryValue: "font-mono text-lg font-bold",
+
+  pageTitle: "text-xl font-bold",
+
+  paddedCard: "rounded-2xl p-4",
+
+  shadowCard: "rounded-2xl p-4 shadow-sm",
+
+  spaciousSearchContainer: "flex items-center gap-2 rounded-xl px-3 py-2.5",
+
+  fullWidth: "w-full",
+
+  tinyBoldText: "text-[10px] font-bold",
+
+  scrollingContent: "flex-1 overflow-y-auto",
+
   caption: "text-xs mt-0.5",
+
   priceBadge: "text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0",
+
   statLabel: "text-[10px] text-slate-500",
+
   sectionSpacing: "px-4 mt-4",
 
   overlay: "absolute inset-0 flex items-end",
@@ -79,22 +106,51 @@ export const sharedClasses = {
 // Each helper requires only the palette fields used by its pattern.
 
 export const sharedStyles = {
+  sheetOverlay: {
+    background: "rgba(44,36,22,0.45)",
+    backdropFilter: "blur(3px)",
+    zIndex: 50,
+  } satisfies CSSProperties,
+
+  selectedFilter: (
+    pal: Pick<Palette, "inputBg" | "textSecondary">,
+    selected: boolean,
+  ): CSSProperties => ({
+    background: selected ? "var(--color-brand-green)" : pal.inputBg,
+    color: selected ? "#fff" : pal.textSecondary,
+  }),
+
+  chartHeight: (height: number): CSSProperties => ({ height }),
+
+  priceVariation: (variation: number): CSSProperties => ({
+    color:
+      variation >= 0 ? "var(--color-terracotta)" : "var(--color-brand-green)",
+  }),
+
   priceBadge: (priceIndex: number): CSSProperties => ({
     color: priceColor(priceIndex),
+
     background: priceColor(priceIndex) + "20",
   }),
+
   priceBackground: (priceIndex: number): CSSProperties => ({
     background: priceColor(priceIndex) + "20",
   }),
+
   priceText: (priceIndex: number): CSSProperties => ({
     color: priceColor(priceIndex),
   }),
+
   communityBackground,
+
   communityText,
+
   communityBadge: {
     ...communityBackground,
+
     ...communityText,
   } satisfies CSSProperties,
+
   border: (pal: Pick<Palette, "border">): CSSProperties => ({
     border: `1px solid ${pal.border}`,
   }),
@@ -107,6 +163,7 @@ export const sharedStyles = {
 
   chevronRotation: (degrees: number): CSSProperties => ({
     transform: `rotate(${degrees}deg)`,
+
     transition: "transform .2s",
   }),
 
@@ -120,6 +177,7 @@ export const sharedStyles = {
 
   alternateCard: (pal: Pick<Palette, "cardAlt" | "border">): CSSProperties => ({
     background: pal.cardAlt,
+
     border: `1px solid ${pal.border}`,
   }),
 
@@ -137,6 +195,7 @@ export const sharedStyles = {
 
   primaryButton: {
     background: "linear-gradient(135deg, var(--color-brand-green), #2c4e37)",
+
     boxShadow: "0 4px 16px #3d664844",
   } satisfies CSSProperties,
 
@@ -144,12 +203,15 @@ export const sharedStyles = {
     pal: Pick<Palette, "cardAlt" | "textPrimary" | "border">,
   ): CSSProperties => ({
     background: pal.cardAlt,
+
     color: pal.textPrimary,
+
     border: `1px solid ${pal.border}`,
   }),
 
   sectionTitle: (pal: Pick<Palette, "textPrimary">): CSSProperties => ({
     color: pal.textPrimary,
+
     fontFamily: "Lora, serif",
   }),
 
@@ -157,6 +219,7 @@ export const sharedStyles = {
 
   card: (pal: Pick<Palette, "card" | "border">): CSSProperties => ({
     background: pal.card,
+
     border: `1px solid ${pal.border}`,
   }),
 
@@ -168,7 +231,9 @@ export const sharedStyles = {
     pal: Pick<Palette, "inputBg" | "border" | "textPrimary">,
   ): CSSProperties => ({
     background: pal.inputBg,
+
     border: `1px solid ${pal.border}`,
+
     color: pal.textPrimary,
   }),
 
@@ -180,6 +245,37 @@ export const sharedStyles = {
     pal: Pick<Palette, "inputBg" | "border">,
   ): CSSProperties => ({
     background: pal.inputBg,
+
     border: `1px solid ${pal.border}`,
   }),
 }
+
+export const sharedChartAppearance = {
+  gridColor: "#f1f5f9",
+
+  labelColor: "#94a3b8",
+
+  basketColor: "var(--color-brand-green)",
+
+  pointBorder: "white",
+
+  fontSize: "8.5",
+
+  compactFontSize: "8",
+
+  fontFamily: "DM Mono, monospace",
+
+  gridWidth: "1",
+
+  lineWidth: "2.2",
+
+  pointWidth: "1.5",
+
+  lineJoin: "round",
+
+  lineCap: "round",
+
+  areaOpacity: "0.18",
+
+  areaEndOpacity: "0",
+} as const

@@ -56,7 +56,7 @@ export const communityRecordsClasses = {
 
   maxPriceContainer: "flex items-center gap-1 rounded-xl px-2 py-2",
 
-  maxPriceLabel: "text-[10px] font-bold",
+  maxPriceLabel: sharedClasses.tinyBoldText,
 
   maxPriceInput: "w-12 bg-transparent text-xs font-mono font-bold outline-none",
 
@@ -91,11 +91,13 @@ export const communityRecordsClasses = {
 
 export function createCommunityRecordsStyles(
   pal: Pick<ReturnType<typeof dmPalette>, "cardAlt" | "textSecondary" | "card" | "border" | "divider" | "textPrimary" | "textMuted" | "inputBg" | "bg" | "greenMuted">,
+
   dark: boolean,
 ) {
   return {
     neutralBadge: {
       background: pal.cardAlt,
+
       color: pal.textSecondary,
     } satisfies CSSProperties,
 
@@ -104,14 +106,11 @@ export function createCommunityRecordsStyles(
         diff > 0
           ? "var(--color-terracotta-light)"
           : "var(--color-brand-green-muted)",
+
       color: diff > 0 ? "var(--color-terracotta)" : "var(--color-brand-green)",
     }),
 
-    overlay: {
-      background: "rgba(44,36,22,0.45)",
-      backdropFilter: "blur(3px)",
-      zIndex: 50,
-    } satisfies CSSProperties,
+    overlay: sharedStyles.sheetOverlay,
 
     sheet: { background: pal.card, maxHeight: "82%" } satisfies CSSProperties,
 
@@ -135,6 +134,7 @@ export function createCommunityRecordsStyles(
 
     statsRow: {
       background: pal.cardAlt,
+
       borderTop: `1px solid ${dark ? "#1a4d4b" : "#b2e0de"}`,
     } satisfies CSSProperties,
 
@@ -156,7 +156,9 @@ export function createCommunityRecordsStyles(
 
     maxPriceContainer: {
       background: pal.inputBg,
+
       border: `1px solid ${pal.border}`,
+
       minWidth: 90,
     } satisfies CSSProperties,
 
@@ -164,6 +166,7 @@ export function createCommunityRecordsStyles(
 
     trendButton: (
       trendFilter: "all" | "up" | "down",
+
       k: "all" | "up" | "down",
     ): CSSProperties => ({
       background:
@@ -178,6 +181,7 @@ export function createCommunityRecordsStyles(
                 : "var(--color-brand-green-muted)"
               : "var(--color-brand-green)"
           : pal.inputBg,
+
       color:
         trendFilter === k
           ? k === "up"
@@ -196,6 +200,7 @@ export function createCommunityRecordsStyles(
 
     groupLabel: {
       background: pal.greenMuted,
+
       color: "var(--color-brand-green)",
     } satisfies CSSProperties,
 
