@@ -15,6 +15,22 @@ const communityText = { color: "#2c6460" } satisfies CSSProperties
 // Shared layout and typography patterns. Keep complete Tailwind class names.
 
 export const sharedClasses = {
+  spaciousList: "space-y-3",
+
+  compactList: "space-y-1.5",
+
+  groupHeader: "flex items-center gap-2 mb-2",
+
+  formLabel: "text-[10px] font-bold uppercase tracking-widest mb-1 block",
+
+  formInput: "w-full rounded-xl px-3 py-3 text-sm outline-none",
+
+  emptyList: "text-center py-16",
+
+  emptyListIcon: "text-5xl mb-3",
+
+  itemName: "font-semibold text-sm",
+
   priceSummaryCard: "rounded-2xl p-3 border",
 
   priceSummaryLabel: "text-[10px] font-semibold",
@@ -106,17 +122,41 @@ export const sharedClasses = {
 // Each helper requires only the palette fields used by its pattern.
 
 export const sharedStyles = {
+  pageHeader: (pal: Pick<Palette, "headerBg" | "border">): CSSProperties => ({
+    background: pal.headerBg,
+    borderBottom: `1px solid ${pal.border}`,
+  }),
+
+  cardBackground: (pal: Pick<Palette, "card">): CSSProperties => ({
+    background: pal.card,
+  }),
+
+  accentBackground: {
+    background: "var(--color-brand-green)",
+  } satisfies CSSProperties,
+
+  divider: { background: "#c8bfb2" } satisfies CSSProperties,
+
+  brandGradient: {
+    background:
+      "linear-gradient(135deg, var(--color-brand-green), var(--color-brand-green-light))",
+  } satisfies CSSProperties,
+
   sheetOverlay: {
     background: "rgba(44,36,22,0.45)",
+
     backdropFilter: "blur(3px)",
+
     zIndex: 50,
   } satisfies CSSProperties,
 
   selectedFilter: (
     pal: Pick<Palette, "inputBg" | "textSecondary">,
+
     selected: boolean,
   ): CSSProperties => ({
     background: selected ? "var(--color-brand-green)" : pal.inputBg,
+
     color: selected ? "#fff" : pal.textSecondary,
   }),
 
