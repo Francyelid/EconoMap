@@ -15,6 +15,33 @@ const communityText = { color: "#2c6460" } satisfies CSSProperties
 // Shared layout and typography patterns. Keep complete Tailwind class names.
 
 export const sharedClasses = {
+  addItemSheet: "w-full rounded-t-3xl p-6 pb-8 flex flex-col gap-4",
+
+  centeredHandle: "w-10 h-1 rounded-full mx-auto",
+
+  formTitle: "font-bold text-base",
+
+  quantityRow: "flex gap-3",
+
+  customMarketInput: "w-full rounded-xl px-3 py-3 text-sm outline-none mt-2",
+
+  formActions: "flex gap-2 pt-1",
+
+  formCancelButton: "flex-1 py-3.5 rounded-2xl font-bold text-sm",
+
+  formAddButton: "flex-1 py-3.5 rounded-2xl font-bold text-sm text-white",
+
+  screen: "flex flex-col h-full",
+
+  pageHeader: "px-4 pt-6 pb-3 flex-shrink-0",
+
+  pageHeaderRow: "flex items-start justify-between mb-3",
+
+  addIconButton:
+    "w-9 h-9 text-white rounded-xl flex items-center justify-center text-xl font-bold shadow-sm",
+
+  itemRow: "flex items-start gap-3",
+
   spaciousList: "space-y-3",
 
   compactList: "space-y-1.5",
@@ -122,8 +149,35 @@ export const sharedClasses = {
 // Each helper requires only the palette fields used by its pattern.
 
 export const sharedStyles = {
+  customMarketInput: (
+    pal: Pick<Palette, "inputBg" | "textPrimary">,
+  ): CSSProperties => ({
+    background: pal.inputBg,
+    border: "1px solid var(--color-amber)",
+    color: pal.textPrimary,
+  }),
+
+  cancelButton: (
+    pal: Pick<Palette, "inputBg" | "textSecondary">,
+  ): CSSProperties => ({ background: pal.inputBg, color: pal.textSecondary }),
+
+  addItemButton: (hasName: boolean): CSSProperties => ({
+    background: hasName ? "var(--color-brand-green)" : "#c8bfb2",
+    boxShadow: hasName ? "0 4px 12px #3d664833" : "none",
+  }),
+
+  dangerBackground: {
+    background: "var(--color-terracotta-light)",
+  } satisfies CSSProperties,
+
+  dangerButton: {
+    background: "var(--color-terracotta-light)",
+    color: "var(--color-terracotta)",
+  } satisfies CSSProperties,
+
   pageHeader: (pal: Pick<Palette, "headerBg" | "border">): CSSProperties => ({
     background: pal.headerBg,
+
     borderBottom: `1px solid ${pal.border}`,
   }),
 
@@ -319,3 +373,23 @@ export const sharedChartAppearance = {
 
   areaEndOpacity: "0",
 } as const
+
+export function createStockStatusColors(dark: boolean) {
+  return {
+    expiredBackground: dark ? "#2d1a1a" : "#fef2f2",
+    expiredBorder: dark ? "#5c2626" : "#fecaca",
+    expiredLabel: dark ? "#f87171" : "#ef4444",
+    expiredText: dark ? "#fca5a5" : "#b91c1c",
+    warningBackground: dark ? "#2d2010" : "#fff7ed",
+    warningBorder: dark ? "#5c3d10" : "#fed7aa",
+    warningLabel: dark ? "#fb923c" : "#f97316",
+    warningText: dark ? "#fdba74" : "#c2410c",
+    okBackground: dark ? "#0f2a1a" : "#f0fdf4",
+    okBorder: dark ? "#1a4d2e" : "#bbf7d0",
+    okLabel: dark ? "#4ade80" : "#16a34a",
+    okText: dark ? "#86efac" : "#15803d",
+    expiredBadge: dark ? "#5c2626" : "#fee2e2",
+    warningBadge: dark ? "#5c3d10" : "#ffedd5",
+    okBadge: dark ? "#1a4d2e" : "#dcfce7",
+  }
+}

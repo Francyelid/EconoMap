@@ -5,9 +5,9 @@ import { sharedClasses, sharedStyles } from "@/screen/shared/styles"
 import type { dmPalette } from "@/theme"
 
 export const mapScreenClasses = {
-  screen: "flex flex-col h-full",
+  screen: sharedClasses.screen,
 
-  header: "px-4 pt-6 pb-3 flex-shrink-0",
+  header: sharedClasses.pageHeader,
 
   title: sharedClasses.pageTitle,
 
