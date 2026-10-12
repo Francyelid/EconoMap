@@ -32,9 +32,9 @@ export const listScreenClasses = {
   itemTotal: "text-xs font-mono font-bold text-slate-700 flex-shrink-0",
   removeItem:
     "text-slate-200 hover:text-red-400 text-xs transition-colors flex-shrink-0",
-  screen: "flex flex-col h-full",
+  screen: sharedClasses.screen,
   header: "px-4 pt-5 pb-3 flex-shrink-0",
-  headerRow: "flex items-start justify-between mb-3",
+  headerRow: sharedClasses.pageHeaderRow,
   title: sharedClasses.pageTitle,
   subtitle: sharedClasses.caption,
   addButton:

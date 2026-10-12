@@ -31,7 +31,7 @@ export const marketListClasses = {
 
   card: sharedClasses.shadowCard,
 
-  cardContent: "flex items-start gap-3",
+  cardContent: sharedClasses.itemRow,
 
   icon: "w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0",
 
