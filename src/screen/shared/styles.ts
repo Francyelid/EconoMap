@@ -15,6 +15,21 @@ const communityText = { color: "#2c6460" } satisfies CSSProperties
 // Shared layout and typography patterns. Keep complete Tailwind class names.
 
 export const sharedClasses = {
+  confirmationSheet: "w-full rounded-t-3xl p-6 pb-8",
+  confirmationHandle: "w-10 h-1 rounded-full mx-auto mb-5",
+  dialogIntro: "flex flex-col items-center text-center mb-6",
+  dialogButton: "w-full py-4 rounded-2xl font-bold text-sm",
+  compactDialogHandle: "w-10 h-1 rounded-full mx-auto mb-4",
+  formField: "flex flex-col gap-1",
+  relativeContainer: "relative",
+  dialogIcon:
+    "w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-3",
+  dialogTitle: "font-bold text-lg",
+  confirmationMessage: "text-sm mt-1.5 leading-relaxed",
+  animatedDialogButton:
+    "w-full py-4 rounded-2xl font-bold text-sm transition-all active:scale-95",
+  alignedRow: "flex items-center gap-3",
+
   addItemSheet: "w-full rounded-t-3xl p-6 pb-8 flex flex-col gap-4",
 
   centeredHandle: "w-10 h-1 rounded-full mx-auto",
@@ -149,11 +164,34 @@ export const sharedClasses = {
 // Each helper requires only the palette fields used by its pattern.
 
 export const sharedStyles = {
+  dialogOverlay: {
+    background: "rgba(44,36,22,0.5)",
+    backdropFilter: "blur(4px)",
+    zIndex: 50,
+  } satisfies CSSProperties,
+
+  greenMutedBackground: (pal: ReturnType<typeof dmPalette>): CSSProperties => ({
+    background: pal.greenMuted,
+  }),
+
+  brandText: { color: "#3d6648" } satisfies CSSProperties,
+
+  dangerText: { color: "#c04830" } satisfies CSSProperties,
+  dangerIconBackground: (dark: boolean): CSSProperties => ({
+    background: dark ? "#4a1a14" : "#f5ebe8",
+  }),
+  dialogCancelButton: (pal: ReturnType<typeof dmPalette>): CSSProperties => ({
+    background: pal.cardAlt,
+    color: pal.textPrimary,
+  }),
+
   customMarketInput: (
     pal: Pick<Palette, "inputBg" | "textPrimary">,
   ): CSSProperties => ({
     background: pal.inputBg,
+
     border: "1px solid var(--color-amber)",
+
     color: pal.textPrimary,
   }),
 
@@ -163,6 +201,7 @@ export const sharedStyles = {
 
   addItemButton: (hasName: boolean): CSSProperties => ({
     background: hasName ? "var(--color-brand-green)" : "#c8bfb2",
+
     boxShadow: hasName ? "0 4px 12px #3d664833" : "none",
   }),
 
@@ -172,6 +211,7 @@ export const sharedStyles = {
 
   dangerButton: {
     background: "var(--color-terracotta-light)",
+
     color: "var(--color-terracotta)",
   } satisfies CSSProperties,
 
@@ -377,19 +417,33 @@ export const sharedChartAppearance = {
 export function createStockStatusColors(dark: boolean) {
   return {
     expiredBackground: dark ? "#2d1a1a" : "#fef2f2",
+
     expiredBorder: dark ? "#5c2626" : "#fecaca",
+
     expiredLabel: dark ? "#f87171" : "#ef4444",
+
     expiredText: dark ? "#fca5a5" : "#b91c1c",
+
     warningBackground: dark ? "#2d2010" : "#fff7ed",
+
     warningBorder: dark ? "#5c3d10" : "#fed7aa",
+
     warningLabel: dark ? "#fb923c" : "#f97316",
+
     warningText: dark ? "#fdba74" : "#c2410c",
+
     okBackground: dark ? "#0f2a1a" : "#f0fdf4",
+
     okBorder: dark ? "#1a4d2e" : "#bbf7d0",
+
     okLabel: dark ? "#4ade80" : "#16a34a",
+
     okText: dark ? "#86efac" : "#15803d",
+
     expiredBadge: dark ? "#5c2626" : "#fee2e2",
+
     warningBadge: dark ? "#5c3d10" : "#ffedd5",
+
     okBadge: dark ? "#1a4d2e" : "#dcfce7",
   }
 }
