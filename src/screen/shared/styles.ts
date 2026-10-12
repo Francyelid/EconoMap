@@ -15,6 +15,12 @@ const communityText = { color: "#2c6460" } satisfies CSSProperties
 // Shared layout and typography patterns. Keep complete Tailwind class names.
 
 export const sharedClasses = {
+  authField: "flex flex-col gap-1.5",
+  authLabel: "text-xs font-bold uppercase tracking-wide",
+  authInput: "w-full rounded-xl px-4 py-3 text-sm outline-none transition",
+  authSubmitButton:
+    "w-full py-4 rounded-2xl text-sm font-bold text-white transition-all active:scale-95 mt-1",
+
   confirmationSheet: "w-full rounded-t-3xl p-6 pb-8",
   confirmationHandle: "w-10 h-1 rounded-full mx-auto mb-5",
   dialogIntro: "flex flex-col items-center text-center mb-6",
@@ -164,6 +170,20 @@ export const sharedClasses = {
 // Each helper requires only the palette fields used by its pattern.
 
 export const sharedStyles = {
+  authSubmitButton: (
+    pal: Pick<Palette, "border" | "textSecondary">,
+    canSubmit: boolean,
+  ): CSSProperties => ({
+    background: canSubmit
+      ? "linear-gradient(135deg, #3d6648, #2c4e37)"
+      : pal.border,
+    color: canSubmit ? "#fff" : pal.textSecondary,
+    boxShadow: canSubmit ? "0 4px 16px #3d664844" : "none",
+  }),
+  paletteDivider: (pal: Pick<Palette, "divider">): CSSProperties => ({
+    background: pal.divider,
+  }),
+
   dialogOverlay: {
     background: "rgba(44,36,22,0.5)",
     backdropFilter: "blur(4px)",
