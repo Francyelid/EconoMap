@@ -2,20 +2,28 @@ import {
   marketRankingClasses,
   createMarketRankingStyles,
 } from "./MarketRanking.styles"
+
 import type { Market } from "@/interfaces/Market"
+
 import { priceLabel, TYPE_EMOJI } from "../../marketUtils"
 
 type MarketRankingProps = {
   markets: Market[]
+
   rankingCollapsed: boolean
+
   onToggleRanking: () => void
+
   onSelectMarket: (market: Market) => void
 }
 
 export default function MarketRanking({
   markets,
+
   rankingCollapsed,
+
   onToggleRanking,
+
   onSelectMarket,
 }: MarketRankingProps) {
   const styles = createMarketRankingStyles()
