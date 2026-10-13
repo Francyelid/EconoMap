@@ -4,18 +4,24 @@ import {
   mapDrawingColors,
   priceLegend,
 } from "./MapDrawing.styles"
+
 import type { Market } from "@/interfaces/Market"
+
 import { TYPE_EMOJI } from "../../marketUtils"
 
 type MapDrawingProps = {
   markets: Market[]
+
   selected: Market | null
+
   onSelectMarket: (market: Market | null) => void
 }
 
 export default function MapDrawing({
   markets,
+
   selected,
+
   onSelectMarket,
 }: MapDrawingProps) {
   const styles = createMapDrawingStyles()

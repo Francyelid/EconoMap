@@ -1,27 +1,42 @@
 import { authFieldsClasses } from "./AuthFields.styles"
+
 import { sharedClasses, sharedStyles } from "@/screen/shared/styles"
+
 import { dmPalette, useDark } from "@/theme"
 
 export type AuthFieldsProps = {
   email: string
+
   setEmail: (value: string) => void
+
   password: string
+
   setPassword: (value: string) => void
+
   showPass: boolean
+
   setShowPass: (value: boolean) => void
+
   showForgotPassword?: boolean
 }
 
 export default function AuthFields({
   email,
+
   setEmail,
+
   password,
+
   setPassword,
+
   showPass,
+
   setShowPass,
+
   showForgotPassword = false,
 }: AuthFieldsProps) {
   const pal = dmPalette(useDark())
+
   return (
     <>
       {/* Email */}

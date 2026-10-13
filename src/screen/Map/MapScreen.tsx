@@ -1,9 +1,11 @@
+import MapHeader from "./MapHeader/MapHeader"
+import type { MapView, PriceFilter } from "./types"
 import { mapScreenClasses, createMapScreenStyles } from "./MapScreen.styles"
 import { useState } from "react"
 import type { Market } from "@/interfaces/Market"
 import { MARKETS } from "@/mocks/MARKETS"
 import { dmPalette, useDark } from "@/theme"
-import MarketList, { type PriceFilter } from "./MarketList/MarketList"
+import MarketList from "./MarketList/MarketList"
 import MarketMap from "./MarketMap/MarketMap"
 
 export default function MapScreen() {
@@ -12,7 +14,7 @@ export default function MapScreen() {
 
   const [selected, setSelected] = useState<Market | null>(null)
 
-  const [view, setView] = useState<"map" | "list">("map")
+  const [view, setView] = useState<MapView>("map")
 
   const [rankingCollapsed, setRankingCollapsed] = useState(false)
 
@@ -48,30 +50,11 @@ export default function MapScreen() {
 
     .sort((a, b) => a.priceIndex - b.priceIndex)
 
-  const styles = createMapScreenStyles(p, dark)
+  const styles = createMapScreenStyles(p)
 
   return (
     <div className={mapScreenClasses.screen}>
-      <div className={mapScreenClasses.header} style={styles.header}>
-        <h1 className={mapScreenClasses.title} style={styles.primaryText}>
-          Mapa de Mercados
-        </h1>
-        <p className={mapScreenClasses.subtitle} style={styles.secondaryText}>
-          Compare preços e distâncias
-        </p>
-        <div className={mapScreenClasses.tabs} style={styles.tabs}>
-          {(["map", "list"] as const).map((v) => (
-            <button
-              key={v}
-              onClick={() => setView(v)}
-              className={mapScreenClasses.tab}
-              style={styles.tab(view === v)}
-            >
-              {v === "map" ? "🗺  Mapa" : "📋  Lista"}
-            </button>
-          ))}
-        </div>
-      </div>
+      <MapHeader palette={p} dark={dark} view={view} onViewChange={setView} />
 
       <div className={mapScreenClasses.content} style={styles.background}>
         {view === "map" && (

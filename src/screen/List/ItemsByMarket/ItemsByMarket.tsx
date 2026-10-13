@@ -1,10 +1,15 @@
+import MarketItemGroup from "../MarketItemGroup/MarketItemGroup"
 import {
   itemsByMarketClasses,
   createItemsByMarketStyles,
 } from "./ItemsByMarket.styles"
+
 import { Fragment } from "react"
+
 import type { ReactNode } from "react"
+
 import type { ShoppingItem } from "@/interfaces/ShoppingItem"
+
 import { dmPalette, useDark } from "@/theme"
 
 type ItemsByMarketProps = {
@@ -17,7 +22,9 @@ type ItemsByMarketProps = {
 
 export default function ItemsByMarket({
   unchecked,
+
   checked,
+
   renderItem,
 }: ItemsByMarketProps) {
   const pal = dmPalette(useDark())
@@ -42,55 +49,16 @@ export default function ItemsByMarket({
 
   return (
     <div className={itemsByMarketClasses.groups}>
-      {Object.entries(byMarket).map(([mkt, mktItems]) => (
-        <div key={mkt}>
-          <div className={itemsByMarketClasses.groupHeader}>
-            <span className={itemsByMarketClasses.icon}>🏪</span>
-            <p
-              className={itemsByMarketClasses.marketName}
-              style={styles.accent}
-            >
-              {mkt}
-            </p>
-            <div
-              className={itemsByMarketClasses.divider}
-              style={styles.divider}
-            />
-            <p className={itemsByMarketClasses.subtotal} style={styles.accent}>
-              R${" "}
-              {mktItems
-                .reduce((s, i) => s + (i.price ?? 0) * parseFloat(i.qty), 0)
-                .toFixed(2)}
-            </p>
-          </div>
-          <div className={itemsByMarketClasses.items}>
-            {mktItems.map((item) => (
-              <Fragment key={item.id}>{renderItem(item)}</Fragment>
-            ))}
-          </div>
-        </div>
+      {Object.entries(byMarket).map(([market, marketItems]) => (
+        <MarketItemGroup
+          key={market}
+          market={market}
+          items={marketItems}
+          renderItem={renderItem}
+        />
       ))}
       {noMarket.length > 0 && (
-        <div>
-          <div className={itemsByMarketClasses.groupHeader}>
-            <span className={itemsByMarketClasses.icon}>❓</span>
-            <p
-              className={itemsByMarketClasses.marketName}
-              style={styles.secondaryText}
-            >
-              Sem mercado definido
-            </p>
-            <div
-              className={itemsByMarketClasses.divider}
-              style={styles.divider}
-            />
-          </div>
-          <div className={itemsByMarketClasses.items}>
-            {noMarket.map((item) => (
-              <Fragment key={item.id}>{renderItem(item)}</Fragment>
-            ))}
-          </div>
-        </div>
+        <MarketItemGroup items={noMarket} renderItem={renderItem} />
       )}
       {checked.length > 0 && (
         <div>

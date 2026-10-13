@@ -2,26 +2,38 @@ import {
   deleteStockModalClasses,
   createDeleteStockModalStyles,
 } from "./DeleteStockModal.styles"
+
 import type { StockItem } from "@/interfaces/StockItem"
+
 import { dmPalette, useDark } from "@/theme"
+
 import { CAT_EMOJI } from "../stockUtils"
 
 type DeleteStockModalProps = {
   item: StockItem
+
   isAddedToList: boolean
+
   onAddToListAndDelete: () => void
+
   onDelete: () => void
+
   onClose: () => void
 }
 
 export default function DeleteStockModal({
   item,
+
   isAddedToList,
+
   onAddToListAndDelete,
+
   onDelete,
+
   onClose,
 }: DeleteStockModalProps) {
   const dark = useDark()
+
   const pal = dmPalette(dark)
 
   const styles = createDeleteStockModalStyles(pal, dark)

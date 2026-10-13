@@ -1,6 +1,6 @@
 import { sharedClasses, sharedStyles } from "@/screen/shared/styles"
 
-export const marketMapClasses = {
+export const selectedMarketCardClasses = {
   selectedCard: "bg-white rounded-2xl p-4 border border-slate-200 shadow-sm",
   header: "flex items-start justify-between",
   identity: "flex items-start gap-2.5",
@@ -20,7 +20,7 @@ export const marketMapClasses = {
   communityText: "text-[11px] font-semibold",
 } as const
 
-export function createMarketMapStyles() {
+export function createSelectedMarketCardStyles() {
   return {
     priceBackground: sharedStyles.priceBackground,
     priceText: sharedStyles.priceText,

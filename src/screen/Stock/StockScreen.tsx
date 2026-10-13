@@ -1,3 +1,7 @@
+import StockHeader from "./StockHeader/StockHeader"
+import StockSummary from "./StockSummary/StockSummary"
+import StockFilters from "./StockFilters/StockFilters"
+import type { StockFilter } from "./types"
 import {
   stockScreenClasses,
   createStockScreenStyles,
@@ -30,7 +34,7 @@ export default function StockScreen() {
 
   const [items, setItems] = useState<StockItem[]>(STOCK_INIT)
 
-  const [filter, setFilter] = useState<"all" | "warning" | "expired">("all")
+  const [filter, setFilter] = useState<StockFilter>("all")
 
   const [deleteTarget, setDeleteTarget] = useState<StockItem | null>(null)
 
@@ -49,89 +53,16 @@ export default function StockScreen() {
   return (
     <div className={stockScreenClasses.screen}>
       <div className={stockScreenClasses.header} style={styles.header}>
-        <div className={stockScreenClasses.headerRow}>
-          <div>
-            <h1 className={stockScreenClasses.title} style={styles.primaryText}>
-              Meu Estoque
-            </h1>
-            <p
-              className={stockScreenClasses.subtitle}
-              style={styles.secondaryText}
-            >
-              {items.length} produtos em casa
-            </p>
-          </div>
-          <button
-            onClick={() => setShowAddModal(true)}
-            className={stockScreenClasses.addButton}
-            style={styles.addButton}
-          >
-            +
-          </button>
-        </div>
-
-        {/* Summary pills */}
-        <div className={stockScreenClasses.summary}>
-          <div
-            className={stockScreenClasses.summaryCard}
-            style={styles.expiredCard}
-          >
-            <p
-              className={stockScreenClasses.summaryLabel}
-              style={styles.expiredLabel}
-            >
-              Vencidos
-            </p>
-            <p className={stockScreenClasses.title} style={styles.expiredValue}>
-              {expired.length}
-            </p>
-          </div>
-          <div
-            className={stockScreenClasses.summaryCard}
-            style={styles.warningCard}
-          >
-            <p
-              className={stockScreenClasses.summaryLabel}
-              style={styles.warningLabel}
-            >
-              Em breve
-            </p>
-            <p className={stockScreenClasses.title} style={styles.warningValue}>
-              {warning.length}
-            </p>
-          </div>
-          <div className={stockScreenClasses.summaryCard} style={styles.okCard}>
-            <p
-              className={stockScreenClasses.summaryLabel}
-              style={styles.okLabel}
-            >
-              Em dia
-            </p>
-            <p className={stockScreenClasses.title} style={styles.okValue}>
-              {ok.length}
-            </p>
-          </div>
-        </div>
-
-        {/* Filter tabs */}
-        <div className={stockScreenClasses.tabs} style={styles.tabs}>
-          {([
-            { k: "all", l: "Todos" },
-
-            { k: "warning", l: "⚠️ Atenção" },
-
-            { k: "expired", l: "🔴 Vencidos" },
-          ] as const).map(({ k, l }) => (
-            <button
-              key={k}
-              onClick={() => setFilter(k)}
-              className={stockScreenClasses.tab}
-              style={styles.tab(filter === k)}
-            >
-              {l}
-            </button>
-          ))}
-        </div>
+        <StockHeader
+          itemCount={items.length}
+          onAdd={() => setShowAddModal(true)}
+        />
+        <StockSummary
+          expiredCount={expired.length}
+          warningCount={warning.length}
+          okCount={ok.length}
+        />
+        <StockFilters filter={filter} setFilter={setFilter} />
       </div>
 
       {filter === "all" && (

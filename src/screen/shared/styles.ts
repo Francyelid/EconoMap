@@ -15,6 +15,8 @@ const communityText = { color: "#2c6460" } satisfies CSSProperties
 // Shared layout and typography patterns. Keep complete Tailwind class names.
 
 export const sharedClasses = {
+  selectionLabel:
+    "text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2",
   authField: "flex flex-col gap-1.5",
   authLabel: "text-xs font-bold uppercase tracking-wide",
   authInput: "w-full rounded-xl px-4 py-3 text-sm outline-none transition",

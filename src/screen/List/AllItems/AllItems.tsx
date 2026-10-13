@@ -1,7 +1,11 @@
 import { allItemsClasses, createAllItemsStyles } from "./AllItems.styles"
+
 import { Fragment } from "react"
+
 import type { ReactNode } from "react"
+
 import type { ShoppingItem } from "@/interfaces/ShoppingItem"
+
 import { dmPalette, useDark } from "@/theme"
 
 type AllItemsProps = {
@@ -14,7 +18,9 @@ type AllItemsProps = {
 
 export default function AllItems({
   unchecked,
+
   checked,
+
   renderItem,
 }: AllItemsProps) {
   const pal = dmPalette(useDark())
