@@ -1,7 +1,7 @@
-import ListProductField from "../ListProductField/ListProductField"
-import ListQuantityFields from "../ListQuantityFields/ListQuantityFields"
-import ListMarketField from "../ListMarketField/ListMarketField"
-import ListFormActions from "../ListFormActions/ListFormActions"
+import ProductField from "@/components/ProductField/ProductField"
+import QuantityFields from "@/components/QuantityFields/QuantityFields"
+import MarketField from "@/components/MarketField/MarketField"
+import FormActions from "@/components/FormActions/FormActions"
 import { addToListClasses, createAddToListStyles } from "./AddToList.styles"
 import { useState } from "react"
 import { dmPalette, useDark } from "@/theme"
@@ -82,20 +82,20 @@ export default function AddToList({
           Adicionar à Lista
         </h2>
 
-        <ListProductField
+        <ProductField
           addName={addName}
           setAddName={setAddName}
           addItem={addItem}
         />
 
-        <ListQuantityFields
+        <QuantityFields
           addQty={addQty}
           setAddQty={setAddQty}
           addUnit={addUnit}
           setAddUnit={setAddUnit}
         />
 
-        <ListMarketField
+        <MarketField
           markets={markets}
           addMarket={addMarket}
           setAddMarket={setAddMarket}
@@ -103,11 +103,7 @@ export default function AddToList({
           setAddMarketCustom={setAddMarketCustom}
         />
 
-        <ListFormActions
-          addName={addName}
-          addItem={addItem}
-          onClose={onClose}
-        />
+        <FormActions addName={addName} addItem={addItem} onClose={onClose} />
       </div>
     </div>
   )

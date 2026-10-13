@@ -1,50 +1,52 @@
 import {
-  listQuantityFieldsClasses,
-  createListQuantityFieldsStyles,
-} from "./ListQuantityFields.styles"
+  quantityFieldsClasses,
+  createQuantityFieldsStyles,
+} from "./QuantityFields.styles"
 import { dmPalette, useDark } from "@/theme"
 
-type ListQuantityFieldsProps = {
+type QuantityFieldsProps = {
+  quantityLabel?: string
   addQty: string
   setAddQty: (value: string) => void
   addUnit: string
   setAddUnit: (value: string) => void
 }
 
-export default function ListQuantityFields({
+export default function QuantityFields({
+  quantityLabel = "Qtd",
   addQty,
   setAddQty,
   addUnit,
   setAddUnit,
-}: ListQuantityFieldsProps) {
-  const styles = createListQuantityFieldsStyles(dmPalette(useDark()))
+}: QuantityFieldsProps) {
+  const styles = createQuantityFieldsStyles(dmPalette(useDark()))
   return (
-    <div className={listQuantityFieldsClasses.quantityRow}>
-      <div className={listQuantityFieldsClasses.field}>
+    <div className={quantityFieldsClasses.quantityRow}>
+      <div className={quantityFieldsClasses.field}>
         <label
-          className={listQuantityFieldsClasses.label}
+          className={quantityFieldsClasses.label}
           style={styles.secondaryText}
         >
-          Qtd
+          {quantityLabel}
         </label>
         <input
           type="number"
           min="1"
-          className={listQuantityFieldsClasses.input}
+          className={quantityFieldsClasses.input}
           style={styles.input}
           value={addQty}
           onChange={(e) => setAddQty(e.target.value)}
         />
       </div>
-      <div className={listQuantityFieldsClasses.field}>
+      <div className={quantityFieldsClasses.field}>
         <label
-          className={listQuantityFieldsClasses.label}
+          className={quantityFieldsClasses.label}
           style={styles.secondaryText}
         >
           Unidade
         </label>
         <select
-          className={listQuantityFieldsClasses.input}
+          className={quantityFieldsClasses.input}
           style={styles.input}
           value={addUnit}
           onChange={(e) => setAddUnit(e.target.value)}

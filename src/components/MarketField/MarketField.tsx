@@ -1,10 +1,10 @@
 import {
-  listMarketFieldClasses,
-  createListMarketFieldStyles,
-} from "./ListMarketField.styles"
+  marketFieldClasses,
+  createMarketFieldStyles,
+} from "./MarketField.styles"
 import { dmPalette, useDark } from "@/theme"
 
-type ListMarketFieldProps = {
+type MarketFieldProps = {
   markets: string[]
   addMarket: string
   setAddMarket: (value: string) => void
@@ -12,24 +12,21 @@ type ListMarketFieldProps = {
   setAddMarketCustom: (value: string) => void
 }
 
-export default function ListMarketField({
+export default function MarketField({
   markets,
   addMarket,
   setAddMarket,
   addMarketCustom,
   setAddMarketCustom,
-}: ListMarketFieldProps) {
-  const styles = createListMarketFieldStyles(dmPalette(useDark()))
+}: MarketFieldProps) {
+  const styles = createMarketFieldStyles(dmPalette(useDark()))
   return (
     <div>
-      <label
-        className={listMarketFieldClasses.label}
-        style={styles.secondaryText}
-      >
+      <label className={marketFieldClasses.label} style={styles.secondaryText}>
         Mercado
       </label>
       <select
-        className={listMarketFieldClasses.input}
+        className={marketFieldClasses.input}
         style={styles.input}
         value={addMarket}
         onChange={(e) => setAddMarket(e.target.value)}
@@ -44,7 +41,7 @@ export default function ListMarketField({
       </select>
       {addMarket === "__custom__" && (
         <input
-          className={listMarketFieldClasses.customMarketInput}
+          className={marketFieldClasses.customMarketInput}
           style={styles.customMarketInput}
           placeholder="Nome do mercado..."
           value={addMarketCustom}

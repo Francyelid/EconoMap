@@ -1,33 +1,33 @@
 import {
-  listFormActionsClasses,
-  createListFormActionsStyles,
-} from "./ListFormActions.styles"
+  formActionsClasses,
+  createFormActionsStyles,
+} from "./FormActions.styles"
 import { dmPalette, useDark } from "@/theme"
 
-type ListFormActionsProps = {
+type FormActionsProps = {
   addName: string
   addItem: () => void
   onClose: () => void
 }
 
-export default function ListFormActions({
+export default function FormActions({
   addName,
   addItem,
   onClose,
-}: ListFormActionsProps) {
-  const styles = createListFormActionsStyles(dmPalette(useDark()))
+}: FormActionsProps) {
+  const styles = createFormActionsStyles(dmPalette(useDark()))
   return (
-    <div className={listFormActionsClasses.actions}>
+    <div className={formActionsClasses.actions}>
       <button
         onClick={onClose}
-        className={listFormActionsClasses.cancelButton}
+        className={formActionsClasses.cancelButton}
         style={styles.cancelButton}
       >
         Cancelar
       </button>
       <button
         onClick={addItem}
-        className={listFormActionsClasses.addButton}
+        className={formActionsClasses.addButton}
         style={styles.addButton(Boolean(addName.trim()))}
       >
         Adicionar

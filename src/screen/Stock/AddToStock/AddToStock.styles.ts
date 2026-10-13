@@ -7,14 +7,6 @@ export const addToStockClasses = {
   sheet: sharedClasses.addItemSheet,
   handle: sharedClasses.centeredHandle,
   title: sharedClasses.formTitle,
-  label: sharedClasses.formLabel,
-  input: sharedClasses.formInput,
-  quantityRow: sharedClasses.quantityRow,
-  field: sharedClasses.fill,
-  customMarketInput: sharedClasses.customMarketInput,
-  actions: sharedClasses.formActions,
-  cancelButton: sharedClasses.formCancelButton,
-  addButton: sharedClasses.formAddButton,
 } as const
 
 export function createAddToStockStyles(pal: ReturnType<typeof dmPalette>) {
@@ -23,10 +15,5 @@ export function createAddToStockStyles(pal: ReturnType<typeof dmPalette>) {
     sheet: sharedStyles.cardBackground(pal),
     handle: sharedStyles.handle(pal),
     title: sharedStyles.sectionTitle(pal),
-    secondaryText: sharedStyles.secondaryText(pal),
-    input: sharedStyles.input(pal),
-    customMarketInput: sharedStyles.customMarketInput(pal),
-    cancelButton: sharedStyles.cancelButton(pal),
-    addButton: sharedStyles.addItemButton,
   }
 }

@@ -1,3 +1,8 @@
+import ProductField from "@/components/ProductField/ProductField"
+import QuantityFields from "@/components/QuantityFields/QuantityFields"
+import MarketField from "@/components/MarketField/MarketField"
+import FormActions from "@/components/FormActions/FormActions"
+import StockExpiryField from "../StockExpiryField/StockExpiryField"
 import { addToStockClasses, createAddToStockStyles } from "./AddToStock.styles"
 import { useState } from "react"
 import { dmPalette, useDark } from "@/theme"
@@ -83,128 +88,31 @@ export default function AddToStock({
           Adicionar ao Estoque
         </h2>
 
-        {/* Produto */}
-        <div>
-          <label
-            className={addToStockClasses.label}
-            style={styles.secondaryText}
-          >
-            Produto
-          </label>
-          <input
-            autoFocus
-            className={addToStockClasses.input}
-            style={styles.input}
-            placeholder="Ex: Arroz, Feijão, Leite..."
-            value={addName}
-            onChange={(e) => setAddName(e.target.value)}
-          />
-        </div>
-
-        {/* Quantidade + Unidade */}
-        <div className={addToStockClasses.quantityRow}>
-          <div className={addToStockClasses.field}>
-            <label
-              className={addToStockClasses.label}
-              style={styles.secondaryText}
-            >
-              Quantidade
-            </label>
-            <input
-              type="number"
-              min="1"
-              className={addToStockClasses.input}
-              style={styles.input}
-              value={addQty}
-              onChange={(e) => setAddQty(e.target.value)}
-            />
-          </div>
-          <div className={addToStockClasses.field}>
-            <label
-              className={addToStockClasses.label}
-              style={styles.secondaryText}
-            >
-              Unidade
-            </label>
-            <select
-              className={addToStockClasses.input}
-              style={styles.input}
-              value={addUnit}
-              onChange={(e) => setAddUnit(e.target.value)}
-            >
-              {["un", "kg", "g", "L", "ml", "cx", "pct"].map((u) => (
-                <option key={u}>{u}</option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        {/* Validade */}
-        <div>
-          <label
-            className={addToStockClasses.label}
-            style={styles.secondaryText}
-          >
-            Data de Validade
-          </label>
-          <input
-            type="date"
-            className={addToStockClasses.input}
-            style={styles.input}
-            value={addExpiry}
-            onChange={(e) => setAddExpiry(e.target.value)}
-          />
-        </div>
-
-        {/* Mercado */}
-        <div>
-          <label
-            className={addToStockClasses.label}
-            style={styles.secondaryText}
-          >
-            Mercado
-          </label>
-          <select
-            className={addToStockClasses.input}
-            style={styles.input}
-            value={addMarket}
-            onChange={(e) => setAddMarket(e.target.value)}
-          >
-            <option value="">Selecione um mercado...</option>
-            {markets.map((m) => (
-              <option key={m} value={m}>
-                {m}
-              </option>
-            ))}
-            <option value="__custom__">+ Mercado não registrado ainda</option>
-          </select>
-          {addMarket === "__custom__" && (
-            <input
-              className={addToStockClasses.customMarketInput}
-              style={styles.customMarketInput}
-              placeholder="Nome do mercado..."
-              value={addMarketCustom}
-              onChange={(e) => setAddMarketCustom(e.target.value)}
-            />
-          )}
-        </div>
-
-        <div className={addToStockClasses.actions}>
-          <button
-            onClick={onClose}
-            className={addToStockClasses.cancelButton}
-            style={styles.cancelButton}
-          >
-            Cancelar
-          </button>
-          <button
-            onClick={handleAddItem}
-            className={addToStockClasses.addButton}
-            style={styles.addButton(Boolean(addName.trim()))}
-          >
-            Adicionar
-          </button>
-        </div>
+        <ProductField
+          addName={addName}
+          setAddName={setAddName}
+          placeholder="Ex: Arroz, Feijão, Leite..."
+        />
+        <QuantityFields
+          quantityLabel="Quantidade"
+          addQty={addQty}
+          setAddQty={setAddQty}
+          addUnit={addUnit}
+          setAddUnit={setAddUnit}
+        />
+        <StockExpiryField addExpiry={addExpiry} setAddExpiry={setAddExpiry} />
+        <MarketField
+          markets={markets}
+          addMarket={addMarket}
+          setAddMarket={setAddMarket}
+          addMarketCustom={addMarketCustom}
+          setAddMarketCustom={setAddMarketCustom}
+        />
+        <FormActions
+          addName={addName}
+          addItem={handleAddItem}
+          onClose={onClose}
+        />
       </div>
     </div>
   )
