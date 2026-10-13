@@ -2,15 +2,20 @@ import {
   totalEstimateClasses,
   createTotalEstimateStyles,
 } from "./TotalEstimate.styles"
+
 type TotalEstimateProps = {
   total: number
+
   completedCount: number
+
   itemCount: number
 }
 
 export default function TotalEstimate({
   total,
+
   completedCount,
+
   itemCount,
 }: TotalEstimateProps) {
   const progress = itemCount > 0 ? (completedCount / itemCount) * 100 : 0

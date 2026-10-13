@@ -1,5 +1,7 @@
+import ShoppingItemRow from "./ShoppingItemRow/ShoppingItemRow"
+import ShoppingListHeader from "./ShoppingListHeader/ShoppingListHeader"
+import type { ListView } from "./types"
 import { listScreenClasses, createListScreenStyles } from "./ListScreen.styles"
-import TotalEstimate from "./TotalEstimate/TotalEstimate"
 
 import AddToList from "./AddToList/AddToList"
 
@@ -29,7 +31,7 @@ export default function ListScreen() {
 
   const [showAddModal, setShowAddModal] = useState(false)
 
-  const [listView, setListView] = useState<"all" | "byMarket">("all")
+  const [listView, setListView] = useState<ListView>("all")
 
   const [mktPicker, setMktPicker] = useState<string | null>(null)
 
@@ -52,163 +54,34 @@ export default function ListScreen() {
     0,
   )
 
-  function ItemRow({ item }: { item: ShoppingItem }) {
-    return (
-      <div className={listScreenClasses.item} style={styles.card}>
-        <button
-          onClick={() => toggle(item.id)}
-          className={listScreenClasses.checkbox}
-          style={styles.checkbox(item.checked)}
-        >
-          {item.checked && (
-            <svg
-              width="9"
-              height="9"
-              viewBox="0 0 10 10"
-              fill="none"
-              stroke="white"
-              strokeWidth="2.5"
-            >
-              <polyline points="1.5,5.5 4,8 8.5,2" />
-            </svg>
-          )}
-        </button>
-        <div
-          className={listScreenClasses.category}
-          style={styles.category(item.category)}
-        />
-        <div className={listScreenClasses.details}>
-          <p
-            className={listScreenClasses.itemName}
-            style={styles.itemName(item.checked)}
-          >
-            {item.name}
-          </p>
-          <div className={listScreenClasses.metadata}>
-            <span
-              className={listScreenClasses.quantity}
-              style={styles.secondaryText}
-            >
-              {item.qty} {item.unit}
-            </span>
-            {item.price && (
-              <span
-                className={listScreenClasses.quantity}
-                style={styles.secondaryText}
-              >
-                · R$ {item.price.toFixed(2)}
-              </span>
-            )}
-            {/* Market badge */}
-            <button
-              onClick={() =>
-                setMktPicker(mktPicker === item.id ? null : item.id)
-              }
-              className={listScreenClasses.marketBadge}
-              style={styles.marketBadge(Boolean(item.market))}
-            >
-              {item.market ? `🏪 ${item.market.split(" ")[0]}…` : "+ mercado"}
-            </button>
-          </div>
-          {/* Inline market picker */}
-          {mktPicker === item.id && (
-            <div className={listScreenClasses.marketPicker}>
-              <button
-                onClick={() => {
-                  setMarket(item.id, undefined)
-                  setMktPicker(null)
-                }}
-                className={listScreenClasses.removeMarket}
-                style={styles.removeMarket}
-              >
-                Remover
-              </button>
-              {LIST_MARKETS.map((m) => (
-                <button
-                  key={m}
-                  onClick={() => {
-                    setMarket(item.id, m)
-                    setMktPicker(null)
-                  }}
-                  className={listScreenClasses.marketOption}
-                  style={styles.marketOption(item.market === m)}
-                >
-                  {m.split(" ")[0]}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-        {item.price != null && !item.checked && (
-          <p className={listScreenClasses.itemTotal}>
-            R$ {(item.price * parseFloat(item.qty)).toFixed(2)}
-          </p>
-        )}
-        <button
-          onClick={() => remove(item.id)}
-          className={listScreenClasses.removeItem}
-        >
-          ✕
-        </button>
-      </div>
-    )
-  }
-
   return (
     <div className={listScreenClasses.screen}>
-      {/* Header */}
-      <div className={listScreenClasses.header} style={styles.header}>
-        <div className={listScreenClasses.headerRow}>
-          <div>
-            <h1 className={listScreenClasses.title} style={styles.title}>
-              Lista de Compras
-            </h1>
-            <p
-              className={listScreenClasses.subtitle}
-              style={styles.secondaryText}
-            >
-              {unchecked.length} itens restantes
-            </p>
-          </div>
-          <button
-            onClick={() => setShowAddModal(true)}
-            className={listScreenClasses.addButton}
-            style={styles.addButton}
-          >
-            +
-          </button>
-        </div>
-
-        {/* Budget bar */}
-        <TotalEstimate
-          total={total}
-          completedCount={checked.length}
-          itemCount={items.length}
-        />
-
-        {/* View toggle + Add input */}
-        <div className={listScreenClasses.viewRow}>
-          <div className={listScreenClasses.viewGroup} style={styles.viewGroup}>
-            {(["all", "byMarket"] as const).map((v) => (
-              <button
-                key={v}
-                onClick={() => setListView(v)}
-                className={listScreenClasses.viewButton}
-                style={styles.viewButton(listView === v)}
-              >
-                {v === "all" ? "📋 Todos" : "🏪 Por Mercado"}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
+      <ShoppingListHeader
+        remainingCount={unchecked.length}
+        completedCount={checked.length}
+        itemCount={items.length}
+        total={total}
+        listView={listView}
+        setListView={setListView}
+        onAdd={() => setShowAddModal(true)}
+      />
 
       <div className={listScreenClasses.content} style={styles.background}>
         {listView === "all" && (
           <AllItems
             unchecked={unchecked}
             checked={checked}
-            renderItem={(item) => <ItemRow item={item} />}
+            renderItem={(item) => (
+              <ShoppingItemRow
+                item={item}
+                markets={LIST_MARKETS}
+                toggle={toggle}
+                remove={remove}
+                setMarket={setMarket}
+                mktPicker={mktPicker}
+                setMktPicker={setMktPicker}
+              />
+            )}
           />
         )}
 
@@ -216,7 +89,17 @@ export default function ListScreen() {
           <ItemsByMarket
             unchecked={unchecked}
             checked={checked}
-            renderItem={(item) => <ItemRow item={item} />}
+            renderItem={(item) => (
+              <ShoppingItemRow
+                item={item}
+                markets={LIST_MARKETS}
+                toggle={toggle}
+                remove={remove}
+                setMarket={setMarket}
+                mktPicker={mktPicker}
+                setMktPicker={setMktPicker}
+              />
+            )}
           />
         )}
       </div>
