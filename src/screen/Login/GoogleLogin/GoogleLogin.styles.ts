@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react"
+
 import type { dmPalette } from "@/theme"
+
 import { sharedStyles } from "@/screen/shared/styles"
 
 export const googleLoginClasses = {
@@ -10,6 +12,7 @@ export const googleLoginClasses = {
 export const googleLoginStyles = {
   button: (pal: ReturnType<typeof dmPalette>): CSSProperties => ({
     ...sharedStyles.dialogCancelButton(pal),
+
     border: `2px solid ${pal.border}`,
   }),
 }

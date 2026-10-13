@@ -1,3 +1,4 @@
+import AuthSubmitButton from "@/components/AuthSubmitButton/AuthSubmitButton"
 import { createAccountClasses } from "./CreateAccount.styles"
 import { sharedClasses, sharedStyles } from "@/screen/shared/styles"
 import AuthFields from "../AuthFields"
@@ -58,15 +59,9 @@ export default function CreateAccount({
         </span>
         .
       </p>
-      {/* Primary CTA */}
-      <button
-        onClick={onLogin}
-        disabled={!canSubmit}
-        className={sharedClasses.authSubmitButton}
-        style={sharedStyles.authSubmitButton(pal, Boolean(canSubmit))}
-      >
+      <AuthSubmitButton enabled={Boolean(canSubmit)} onClick={onLogin}>
         Criar conta
-      </button>
+      </AuthSubmitButton>
     </>
   )
 }

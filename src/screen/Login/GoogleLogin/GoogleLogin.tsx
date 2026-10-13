@@ -1,5 +1,7 @@
 import { googleLoginClasses, googleLoginStyles } from "./GoogleLogin.styles"
+
 import { sharedClasses, sharedStyles } from "@/screen/shared/styles"
+
 import { dmPalette, useDark } from "@/theme"
 
 type GoogleLoginProps = {
