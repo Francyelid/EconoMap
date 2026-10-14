@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import {
   shoppingListHeaderClasses,
   createShoppingListHeaderStyles,
@@ -69,7 +70,7 @@ export default function ShoppingListHeader({
               className={shoppingListHeaderClasses.viewButton}
               style={styles.viewButton(listView === v)}
             >
-              {v === "all" ? "📋 Todos" : "🏪 Por Mercado"}
+              {v === "all" ? <>{ICONS.clipboard} Todos</> : <>{ICONS.store} Por Mercado</>}
             </button>
           ))}
         </div>

@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import StockItemCard from "../StockItemCard/StockItemCard"
 import {
   stockItemsListClasses,
@@ -28,7 +29,7 @@ export default function StockItemsList({
 
       {items.length === 0 && (
         <div className={stockItemsListClasses.empty} style={styles.mutedText}>
-          <p className={stockItemsListClasses.emptyIcon}>✅</p>
+          <p className={stockItemsListClasses.emptyIcon}>{ICONS.check}</p>
           <p className={stockItemsListClasses.emptyTitle}>Nenhum item aqui</p>
         </div>
       )}

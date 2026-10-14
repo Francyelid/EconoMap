@@ -11,7 +11,7 @@ export default function SettingsRow({
   danger = false,
   onPress,
 }: {
-  icon: string
+  icon: ReactNode
   label: string
   sublabel?: string
   right?: ReactNode

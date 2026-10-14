@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import { createReceiptModalStyles, receiptModalClasses } from "./ReceiptModal.styles"
 import NewReceiptQR from "./NewReceiptQR/NewReceiptQR"
 import GreenHeader from "./GreenHeader"
@@ -91,8 +92,8 @@ export default function ReceiptModal({ onClose, palette: pal }: ReceiptModalProp
                       </p>
                     </div>
                     <div className={receiptModalClasses.itemActions}>
-                      <button onClick={() => setStep("manual")} className={receiptModalClasses.iconButton} style={styles.iconButton}>✏️</button>
-                      <button onClick={() => removeItem(item.id)} className={receiptModalClasses.iconButton} style={styles.iconButton}>🗑️</button>
+                      <button aria-label="Editar item" onClick={() => setStep("manual")} className={receiptModalClasses.iconButton} style={styles.iconButton}>{ICONS.edit}</button>
+                      <button aria-label="Excluir item" onClick={() => removeItem(item.id)} className={receiptModalClasses.iconButton} style={styles.iconButton}>{ICONS.delete}</button>
                     </div>
                   </div>
                 ))}

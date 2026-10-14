@@ -1,10 +1,11 @@
+import { ICONS } from "@/constants/icons"
 import {
   stockItemCardClasses,
   createStockItemCardStyles,
 } from "./StockItemCard.styles"
 import { dmPalette, useDark } from "@/theme"
 import type { StockItem } from "@/interfaces/StockItem"
-import { CAT_EMOJI, daysUntil, expiryStatus, fmtDate } from "../stockUtils"
+import { CATEGORY_ICONS, daysUntil, expiryStatus, fmtDate } from "../stockUtils"
 
 type StockItemCardProps = {
   item: StockItem
@@ -20,7 +21,7 @@ export default function StockItemCard({ item, onDelete }: StockItemCardProps) {
     <div className={stockItemCardClasses.card} style={styles.card(st)}>
       <div className={stockItemCardClasses.row}>
         <div className={stockItemCardClasses.icon} style={styles.icon}>
-          {CAT_EMOJI[item.category] ?? "📦"}
+          {CATEGORY_ICONS[item.category] ?? ICONS.package}
         </div>
         <div className={stockItemCardClasses.details}>
           <div className={stockItemCardClasses.heading}>
@@ -54,7 +55,7 @@ export default function StockItemCard({ item, onDelete }: StockItemCardProps) {
               className={stockItemCardClasses.expiry}
               style={styles.secondaryText}
             >
-              📅 {fmtDate(item.expiry)}
+              {ICONS.calendar} {fmtDate(item.expiry)}
             </p>
             <div className={stockItemCardClasses.actions}>
               <p

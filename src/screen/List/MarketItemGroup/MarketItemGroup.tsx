@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import { Fragment } from "react"
 import type { ReactNode } from "react"
 import type { ShoppingItem } from "@/interfaces/ShoppingItem"
@@ -27,7 +28,7 @@ export default function MarketItemGroup({
     <div>
       <div className={marketItemGroupClasses.header}>
         <span className={marketItemGroupClasses.icon}>
-          {market ? "🏪" : "❓"}
+          {market ? ICONS.store : ICONS.question}
         </span>
         <p
           className={marketItemGroupClasses.name}

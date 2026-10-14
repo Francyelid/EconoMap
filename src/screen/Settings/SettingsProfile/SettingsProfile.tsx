@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import {
   settingsProfileClasses,
   settingsProfileStyles,
@@ -55,10 +56,11 @@ export default function SettingsProfile({ onBack }: SettingsProfileProps) {
             AS
           </div>
           <button
+            aria-label="Editar foto do perfil"
             className={settingsProfileClasses.editAvatar}
             style={settingsProfileStyles.editAvatar}
           >
-            ✏️
+            {ICONS.edit}
           </button>
         </div>
 

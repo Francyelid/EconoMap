@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import RecentPurchaseCard from "../RecentPurchaseCard/RecentPurchaseCard"
 import { recentPurchasesListClasses } from "./RecentPurchasesList.styles"
 import type { RecentPurchase, RecentPurchasesPalette } from "../types"
@@ -8,7 +9,7 @@ const recents: RecentPurchase[] = [
     market: "Supermercado Bom Preço",
     total: 87.4,
     items: 8,
-    emoji: "🏪",
+    icon: ICONS.store,
   },
 
   {
@@ -16,7 +17,7 @@ const recents: RecentPurchase[] = [
     market: "Feira Livre Central",
     total: 42.1,
     items: 12,
-    emoji: "🥬",
+    icon: ICONS.vegetables,
   },
 
   {
@@ -24,7 +25,7 @@ const recents: RecentPurchase[] = [
     market: "Atacadão Sul",
     total: 215.6,
     items: 23,
-    emoji: "📦",
+    icon: ICONS.package,
   },
 ]
 

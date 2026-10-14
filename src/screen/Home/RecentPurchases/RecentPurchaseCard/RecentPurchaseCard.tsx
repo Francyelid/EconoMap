@@ -20,7 +20,7 @@ export default function RecentPurchaseCard({
       style={styles.purchaseCard}
     >
       <div className={recentPurchaseCardClasses.icon} style={styles.icon}>
-        {purchase.emoji}
+        {purchase.icon}
       </div>
       <div className={recentPurchaseCardClasses.details}>
         <p className={recentPurchaseCardClasses.market} style={styles.market}>

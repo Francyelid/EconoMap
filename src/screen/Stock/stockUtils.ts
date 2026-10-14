@@ -20,18 +20,4 @@ export function fmtDate(dateStr: string) {
   return `${d}/${m}/${y}`
 }
 
-export const CAT_EMOJI: Record<string, string> = {
-  Grãos: "🌾",
-
-  Condimentos: "🧴",
-
-  Massas: "🍝",
-
-  Laticínios: "🥛",
-
-  Enlatados: "🥫",
-
-  Bebidas: "☕",
-
-  Outros: "📦",
-}
+export { CATEGORY_ICONS } from "@/constants/icons"

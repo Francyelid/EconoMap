@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import { allItemsClasses, createAllItemsStyles } from "./AllItems.styles"
 
 import { Fragment } from "react"
@@ -44,7 +45,7 @@ export default function AllItems({
       )}
       {unchecked.length === 0 && checked.length === 0 && (
         <div className={allItemsClasses.empty} style={styles.secondaryText}>
-          <p className={allItemsClasses.emptyIcon}>🛒</p>
+          <p className={allItemsClasses.emptyIcon}>{ICONS.cart}</p>
           <p className={allItemsClasses.emptyTitle}>Lista vazia</p>
           <p className={allItemsClasses.emptyHint}>
             Toque em + para adicionar itens

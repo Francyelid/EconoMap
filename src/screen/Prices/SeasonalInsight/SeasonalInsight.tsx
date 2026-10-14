@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import {
   seasonalInsightClasses,
   createSeasonalInsightStyles,
@@ -17,7 +18,7 @@ export default function SeasonalInsight({ product }: SeasonalInsightProps) {
   return (
     <div className={seasonalInsightClasses.card} style={styles.card}>
       <p className={seasonalInsightClasses.title} style={styles.primaryText}>
-        💡 Insight Sazonal
+        {ICONS.lightbulb} Insight Sazonal
       </p>
       <p
         className={seasonalInsightClasses.description}

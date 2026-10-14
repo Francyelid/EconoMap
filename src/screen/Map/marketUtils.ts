@@ -14,14 +14,4 @@ export function priceLabel(idx: number) {
   return "Caro"
 }
 
-export const TYPE_EMOJI: Record<string, string> = {
-  Supermercado: "🏪",
-
-  Feira: "🥬",
-
-  Atacado: "📦",
-
-  Mercado: "🛒",
-
-  Hortifruti: "🍎",
-}
+export { MARKET_ICONS } from "@/constants/icons"

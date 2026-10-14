@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import { sharedClasses, sharedStyles } from "@/screen/shared/styles"
 import { dmPalette, useDark } from "@/theme"
 import type { ReactNode } from "react"
@@ -15,14 +16,14 @@ export default function DataSettings({ onExport, onClear }: DataSettingsProps) {
   return (
     <SettingsSection title="Dados">
       <SettingsRow
-        icon="⬇️"
+        icon={ICONS.download}
         label="Exportar meus dados"
         sublabel="CSV com todas as compras"
         onPress={onExport}
       />
       <SettingsDivider />
       <SettingsRow
-        icon="🗑️"
+        icon={ICONS.delete}
         label="Limpar histórico"
         sublabel="Apaga todos os registros locais"
         danger

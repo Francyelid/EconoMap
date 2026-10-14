@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import {
   createCommunityRecordsListStyles,
   communityRecordsListClasses,
@@ -62,7 +63,7 @@ export default function CommunityRecordsList({
           className={communityRecordsListClasses.emptyState}
           style={styles.secondaryText}
         >
-          <p className={communityRecordsListClasses.emptyIcon}>🔍</p>
+          <p className={communityRecordsListClasses.emptyIcon}>{ICONS.search}</p>
           <p className={communityRecordsListClasses.emptyMessage}>
             Nenhum item encontrado
           </p>

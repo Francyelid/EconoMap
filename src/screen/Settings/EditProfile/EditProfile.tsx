@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import { editProfileClasses, editProfileStyles } from "./EditProfile.styles"
 import { sharedClasses, sharedStyles } from "@/screen/shared/styles"
 import { useState } from "react"
@@ -102,7 +103,7 @@ export default function EditProfile({ isOpen, onClose }: EditProfileProps) {
                 className={editProfileClasses.photoPicker}
                 style={editProfileStyles.photoPicker}
               >
-                <span className={editProfileClasses.photoIcon}>📷</span>
+                <span className={editProfileClasses.photoIcon}>{ICONS.camera}</span>
                 <input
                   type="file"
                   accept="image/*"

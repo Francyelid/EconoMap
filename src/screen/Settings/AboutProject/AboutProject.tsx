@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import { aboutProjectClasses, aboutProjectStyles } from "./AboutProject.styles"
 import { sharedClasses, sharedStyles } from "@/screen/shared/styles"
 import { dmPalette, useDark } from "@/theme"
@@ -32,7 +33,7 @@ export default function AboutProject({ isOpen, onClose }: AboutProjectProps) {
             className={aboutProjectClasses.icon}
             style={sharedStyles.greenMutedBackground(pal)}
           >
-            🌿
+            {ICONS.leaf}
           </div>
           <h3
             className={aboutProjectClasses.title}
@@ -76,6 +77,12 @@ export default function AboutProject({ isOpen, onClose }: AboutProjectProps) {
             </div>
           ))}
         </div>
+        <p className="mt-4 text-center text-xs" style={sharedStyles.secondaryText(pal)}>
+          Ícones: Uicons por{" "}
+          <a href="https://www.flaticon.com/uicons" target="_blank" rel="noopener noreferrer" className="underline">
+            Flaticon
+          </a>
+        </p>
         <button
           onClick={onClose}
           className={sharedClasses.dialogButton}

@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import { exportDataClasses, exportDataStyles } from "./ExportData.styles"
 import { sharedClasses, sharedStyles } from "@/screen/shared/styles"
 import { useState } from "react"
@@ -84,7 +85,7 @@ export default function ExportData({ isOpen, onClose }: ExportDataProps) {
               className={exportDataClasses.icon}
               style={sharedStyles.greenMutedBackground(pal)}
             >
-              ⬇️
+              {ICONS.download}
             </div>
             <div>
               <h3
@@ -118,13 +119,13 @@ export default function ExportData({ isOpen, onClose }: ExportDataProps) {
             </p>
             <div className={exportDataClasses.fieldGrid}>
               {([
-                { k: "compras", label: "Histórico de compras", icon: "🛒" },
+                { k: "compras", label: "Histórico de compras", icon: ICONS.cart },
 
-                { k: "precos", label: "Histórico de preços", icon: "📈" },
+                { k: "precos", label: "Histórico de preços", icon: ICONS.chartUp },
 
-                { k: "estoque", label: "Estoque atual", icon: "📦" },
+                { k: "estoque", label: "Estoque atual", icon: ICONS.package },
 
-                { k: "lista", label: "Lista de compras", icon: "📋" },
+                { k: "lista", label: "Lista de compras", icon: ICONS.clipboard },
               ] as const).map(({ k, label, icon }) => {
                 const on = exportFields.includes(k)
 
@@ -436,7 +437,7 @@ export default function ExportData({ isOpen, onClose }: ExportDataProps) {
                       className={sharedClasses.textButton}
                       style={exportDataStyles.fieldLabel(on, pal)}
                     >
-                      🏪 {m}
+                      {ICONS.store} {m}
                     </p>
                   </button>
                 )
@@ -462,11 +463,11 @@ export default function ExportData({ isOpen, onClose }: ExportDataProps) {
             </p>
             <div className={sharedClasses.filterRow}>
               {([
-                { k: "csv", label: "CSV", icon: "📊" },
+                { k: "csv", label: "CSV", icon: ICONS.chart },
 
-                { k: "json", label: "JSON", icon: "🗂️" },
+                { k: "json", label: "JSON", icon: ICONS.files },
 
-                { k: "xlsx", label: "XLSX", icon: "📋" },
+                { k: "xlsx", label: "XLSX", icon: ICONS.clipboard },
               ] as const).map(({ k, label, icon }) => (
                 <button
                   key={k}

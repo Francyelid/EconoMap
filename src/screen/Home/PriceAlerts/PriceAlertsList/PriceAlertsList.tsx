@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import {
   createPriceAlertsListStyles,
   priceAlertsListClasses,
@@ -46,7 +47,7 @@ export default function PriceAlertsList({ palette }: PriceAlertsListProps) {
             className={priceAlertsListClasses.icon}
             style={styles.icon(a.up)}
           >
-            {a.up ? "📈" : "📉"}
+            {a.up ? ICONS.chartUp : ICONS.chartDown}
           </div>
           <div className={priceAlertsListClasses.details}>
             <div className={priceAlertsListClasses.productRow}>

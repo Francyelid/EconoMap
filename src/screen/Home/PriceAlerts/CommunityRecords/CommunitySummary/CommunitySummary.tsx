@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import {
   communitySummaryClasses,
   createCommunitySummaryStyles,
@@ -20,7 +21,7 @@ export default function CommunitySummary({
         className={communitySummaryClasses.bannerContent}
         style={styles.bannerContent}
       >
-        <span className={communitySummaryClasses.bannerIcon}>👥</span>
+        <span className={communitySummaryClasses.bannerIcon}>{ICONS.community}</span>
         <p
           className={communitySummaryClasses.bannerText}
           style={styles.bannerText}

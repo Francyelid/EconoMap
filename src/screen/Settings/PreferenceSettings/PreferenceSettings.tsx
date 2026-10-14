@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import { sharedClasses, sharedStyles } from "@/screen/shared/styles"
 import { dmPalette, useDark } from "@/theme"
 import type { ReactNode } from "react"
@@ -23,14 +24,14 @@ export default function PreferenceSettings({
   return (
     <SettingsSection title="Preferências">
       <SettingsRow
-        icon="💱"
+        icon={ICONS.currency}
         label="Moeda"
         sublabel={selectedCurrency}
         onPress={onSelectCurrency}
       />
       <SettingsDivider />
       <SettingsRow
-        icon={darkMode ? "☀️" : "🌙"}
+        icon={darkMode ? ICONS.sun : ICONS.moon}
         label="Aparência"
         sublabel={darkMode ? "Modo noturno" : "Tema claro"}
         right={<Toggle on={darkMode} onToggle={() => onToggleDark?.()} />}

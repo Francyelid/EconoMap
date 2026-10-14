@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import { mapHeaderClasses, createMapHeaderStyles } from "./MapHeader.styles"
 import type { dmPalette } from "@/theme"
 import type { MapView } from "../types"
@@ -32,7 +33,7 @@ export default function MapHeader({
             className={mapHeaderClasses.tab}
             style={styles.tab(view === v)}
           >
-            {v === "map" ? "🗺  Mapa" : "📋  Lista"}
+            {v === "map" ? <>{ICONS.map}  Mapa</> : <>{ICONS.clipboard}  Lista</>}
           </button>
         ))}
       </div>
