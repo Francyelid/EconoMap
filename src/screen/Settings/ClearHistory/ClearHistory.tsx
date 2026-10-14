@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import { clearHistoryClasses, clearHistoryStyles } from "./ClearHistory.styles"
 import { sharedClasses, sharedStyles } from "@/screen/shared/styles"
 import { dmPalette, useDark } from "@/theme"
@@ -33,7 +34,7 @@ export default function ClearHistory({ isOpen, onClose }: ClearHistoryProps) {
             className={sharedClasses.dialogIcon}
             style={sharedStyles.dangerIconBackground(dark)}
           >
-            🗑️
+            {ICONS.delete}
           </div>
           <h3
             className={sharedClasses.dialogTitle}

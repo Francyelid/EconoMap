@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import {
   calculatorActionClasses,
   createCalculatorActionStyles,
@@ -15,7 +16,7 @@ export default function CalculatorAction({ onOpen }: CalculatorActionProps) {
       className={calculatorActionClasses.calculatorButton}
       style={styles.calculatorButton}
     >
-      🧮 Calcular Compras
+      {ICONS.calculator} Calcular Compras
     </button>
   )
 }

@@ -2,6 +2,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wdth,wght@0,75..100,400..700;1,75..100,400..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap');
 @import 'tailwindcss';
+@import '@flaticon/flaticon-uicons/css/thin/rounded.css';
+
+.app-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+  font-size: inherit;
+  color: inherit;
+  vertical-align: -0.125em;
+  flex-shrink: 0;
+}
 
 @theme {
   --font-sans: 'Instrument Sans', system-ui, sans-serif;

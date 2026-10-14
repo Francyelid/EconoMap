@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import {
   logoutConfirmationClasses,
   logoutConfirmationStyles,
@@ -39,7 +40,7 @@ export default function LogoutConfirmation({
             className={sharedClasses.dialogIcon}
             style={sharedStyles.dangerIconBackground(dark)}
           >
-            👋
+            {ICONS.wave}
           </div>
           <h3
             className={sharedClasses.dialogTitle}

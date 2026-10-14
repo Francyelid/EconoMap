@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import { sharedClasses, sharedStyles } from "@/screen/shared/styles"
 import { dmPalette, useDark } from "@/theme"
 import type { ReactNode } from "react"
@@ -14,7 +15,7 @@ export default function SupportSettings({ onAbout }: SupportSettingsProps) {
   return (
     <SettingsSection title="Suporte">
       <SettingsRow
-        icon="ℹ️"
+        icon={ICONS.info}
         label="Sobre o EconoMap"
         sublabel="Versão 1.0.0 · TCC Eng. Computação"
         onPress={onAbout}

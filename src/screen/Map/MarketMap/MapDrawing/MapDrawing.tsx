@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import {
   mapDrawingClasses,
   createMapDrawingStyles,
@@ -7,7 +8,7 @@ import {
 
 import type { Market } from "@/interfaces/Market"
 
-import { TYPE_EMOJI } from "../../marketUtils"
+import { MARKET_ICONS } from "../../marketUtils"
 
 type MapDrawingProps = {
   markets: Market[]
@@ -203,7 +204,7 @@ export default function MapDrawing({
               className={mapDrawingClasses.pinIcon}
               style={styles.pinIcon(m.priceIndex)}
             >
-              {TYPE_EMOJI[m.type] ?? "🏬"}
+              {MARKET_ICONS[m.type] ?? ICONS.departmentStore}
             </div>
             <div style={styles.pinTip(m.priceIndex)} />
           </div>

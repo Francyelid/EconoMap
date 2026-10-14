@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import {
   shoppingItemRowClasses,
   createShoppingItemRowStyles,
@@ -77,7 +78,7 @@ export default function ShoppingItemRow({
             className={shoppingItemRowClasses.marketBadge}
             style={styles.marketBadge(Boolean(item.market))}
           >
-            {item.market ? `🏪 ${item.market.split(" ")[0]}…` : "+ mercado"}
+            {item.market ? <>{ICONS.store} {item.market.split(" ")[0]}…</> : "+ mercado"}
           </button>
         </div>
         {/* Inline market picker */}

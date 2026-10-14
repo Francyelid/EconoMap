@@ -1,9 +1,10 @@
+import { ICONS } from "@/constants/icons"
 import {
   selectedMarketCardClasses,
   createSelectedMarketCardStyles,
 } from "./SelectedMarketCard.styles"
 import type { Market } from "@/interfaces/Market"
-import { priceLabel, TYPE_EMOJI } from "../marketUtils"
+import { priceLabel, MARKET_ICONS } from "../marketUtils"
 
 type SelectedMarketCardProps = {
   market: Market
@@ -20,7 +21,7 @@ export default function SelectedMarketCard({
       <div className={selectedMarketCardClasses.header}>
         <div className={selectedMarketCardClasses.identity}>
           <span className={selectedMarketCardClasses.icon}>
-            {TYPE_EMOJI[selected.type] ?? "🏬"}
+            {MARKET_ICONS[selected.type] ?? ICONS.departmentStore}
           </span>
           <div>
             <p className={selectedMarketCardClasses.name}>{selected.name}</p>
@@ -58,7 +59,7 @@ export default function SelectedMarketCard({
         <div className={selectedMarketCardClasses.stat}>
           <p className={selectedMarketCardClasses.statLabel}>Avaliação</p>
           <p className={selectedMarketCardClasses.statValue}>
-            ⭐ {selected.rating}
+            {ICONS.star} {selected.rating}
           </p>
         </div>
       </div>
@@ -66,7 +67,7 @@ export default function SelectedMarketCard({
         className={selectedMarketCardClasses.communityRow}
         style={styles.communityBackground}
       >
-        <span className={selectedMarketCardClasses.communityIcon}>👥</span>
+        <span className={selectedMarketCardClasses.communityIcon}>{ICONS.community}</span>
         <p
           className={selectedMarketCardClasses.communityText}
           style={styles.communityText}

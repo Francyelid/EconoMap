@@ -1,7 +1,8 @@
+import { ICONS } from "@/constants/icons"
 import { marketCardClasses, createMarketCardStyles } from "./MarketCard.styles"
 import type { Market } from "@/interfaces/Market"
 import type { dmPalette } from "@/theme"
-import { priceLabel, TYPE_EMOJI } from "../marketUtils"
+import { priceLabel, MARKET_ICONS } from "../marketUtils"
 import PriceIndex from "../PriceIndex/PriceIndex"
 
 type MarketCardProps = {
@@ -18,7 +19,7 @@ export default function MarketCard({ market: m, palette: p }: MarketCardProps) {
           className={marketCardClasses.icon}
           style={styles.icon(m.priceIndex)}
         >
-          {TYPE_EMOJI[m.type] ?? "🏬"}
+          {MARKET_ICONS[m.type] ?? ICONS.departmentStore}
         </div>
         <div className={marketCardClasses.details}>
           <div className={marketCardClasses.titleRow}>
@@ -39,8 +40,8 @@ export default function MarketCard({ market: m, palette: p }: MarketCardProps) {
             className={marketCardClasses.metadata}
             style={styles.secondaryText}
           >
-            <span>📍 {m.distance} km</span>
-            <span>⭐ {m.rating}</span>
+            <span>{ICONS.location} {m.distance} km</span>
+            <span>{ICONS.star} {m.rating}</span>
             <span>{m.type}</span>
           </div>
           <div className={marketCardClasses.communityRow}>
@@ -48,7 +49,7 @@ export default function MarketCard({ market: m, palette: p }: MarketCardProps) {
               className={marketCardClasses.communityBadge}
               style={styles.communityBadge}
             >
-              👥 {m.registros} registros de usuários
+              {ICONS.community} {m.registros} registros de usuários
             </span>
           </div>
           <PriceIndex value={m.priceIndex} />

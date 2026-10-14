@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import { sharedClasses, sharedStyles } from "@/screen/shared/styles"
 import { dmPalette, useDark } from "@/theme"
 import type { ReactNode } from "react"
@@ -27,7 +28,7 @@ export default function NotificationSettings({
   return (
     <SettingsSection title="Notificações">
       <SettingsRow
-        icon="📈"
+        icon={ICONS.chartUp}
         label="Alertas de preço"
         sublabel="Avisa quando um produto subir ou cair"
         right={
@@ -36,7 +37,7 @@ export default function NotificationSettings({
       />
       <SettingsDivider />
       <SettingsRow
-        icon="⏰"
+        icon={ICONS.alarm}
         label="Vencimentos próximos"
         sublabel="Lembrete 7 dias antes do vencimento"
         right={
@@ -45,7 +46,7 @@ export default function NotificationSettings({
       />
       <SettingsDivider />
       <SettingsRow
-        icon="📊"
+        icon={ICONS.chart}
         label="Resumo semanal"
         sublabel="Relatório de gastos toda segunda-feira"
         right={

@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import {
   priceFiltersClasses,
   createPriceFiltersStyles,
@@ -105,7 +106,7 @@ export default function PriceFilters({
         {([
           { k: "all", l: "Tudo" },
 
-          { k: "custom", l: "📅 Data específica" },
+          { k: "custom", l: <>{ICONS.calendar} Data específica</> },
         ] as const).map(({ k, l }) => (
           <button
             key={k}

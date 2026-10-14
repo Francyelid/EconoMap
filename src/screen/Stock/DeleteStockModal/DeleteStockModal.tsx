@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import {
   deleteStockModalClasses,
   createDeleteStockModalStyles,
@@ -7,7 +8,7 @@ import type { StockItem } from "@/interfaces/StockItem"
 
 import { dmPalette, useDark } from "@/theme"
 
-import { CAT_EMOJI } from "../stockUtils"
+import { CATEGORY_ICONS } from "../stockUtils"
 
 type DeleteStockModalProps = {
   item: StockItem
@@ -53,7 +54,7 @@ export default function DeleteStockModal({
 
         <div className={deleteStockModalClasses.identity}>
           <div className={deleteStockModalClasses.icon} style={styles.icon}>
-            {CAT_EMOJI[item.category] ?? "📦"}
+            {CATEGORY_ICONS[item.category] ?? ICONS.package}
           </div>
           <div>
             <p className={deleteStockModalClasses.name} style={styles.title}>
@@ -81,7 +82,7 @@ export default function DeleteStockModal({
             className={deleteStockModalClasses.confirmation}
             style={styles.confirmation}
           >
-            <span className={deleteStockModalClasses.confirmationIcon}>✅</span>
+            <span className={deleteStockModalClasses.confirmationIcon}>{ICONS.check}</span>
             <p
               className={deleteStockModalClasses.confirmationText}
               style={styles.accent}
@@ -98,7 +99,7 @@ export default function DeleteStockModal({
               className={deleteStockModalClasses.addAndDeleteButton}
               style={styles.addAndDeleteButton}
             >
-              <span>🛒</span> Sim, adicionar à lista e excluir
+              <span>{ICONS.cart}</span> Sim, adicionar à lista e excluir
             </button>
           )}
           <button

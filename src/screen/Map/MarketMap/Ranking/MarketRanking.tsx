@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import {
   marketRankingClasses,
   createMarketRankingStyles,
@@ -5,7 +6,7 @@ import {
 
 import type { Market } from "@/interfaces/Market"
 
-import { priceLabel, TYPE_EMOJI } from "../../marketUtils"
+import { priceLabel, MARKET_ICONS } from "../../marketUtils"
 
 type MarketRankingProps = {
   markets: Market[]
@@ -57,7 +58,7 @@ export default function MarketRanking({
           >
             <span className={marketRankingClasses.position}>{i + 1}</span>
             <span className={marketRankingClasses.icon}>
-              {TYPE_EMOJI[m.type] ?? "🏬"}
+              {MARKET_ICONS[m.type] ?? ICONS.departmentStore}
             </span>
             <div className={marketRankingClasses.details}>
               <p className={marketRankingClasses.name}>{m.name}</p>

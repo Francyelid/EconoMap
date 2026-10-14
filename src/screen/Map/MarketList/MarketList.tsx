@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import MarketCard from "../MarketCard/MarketCard"
 import MarketFilters from "../MarketFilters/MarketFilters"
 import type { MarketFiltersProps } from "../types"
@@ -37,7 +38,7 @@ export default function MarketList({
       />
       {sorted.length === 0 && (
         <div className={marketListClasses.empty} style={styles.secondaryText}>
-          <p className={marketListClasses.emptyIcon}>🔍</p>
+          <p className={marketListClasses.emptyIcon}>{ICONS.search}</p>
           <p className={marketListClasses.emptyMessage}>
             Nenhum mercado encontrado
           </p>

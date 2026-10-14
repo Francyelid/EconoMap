@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import MarketItemGroup from "../MarketItemGroup/MarketItemGroup"
 import {
   itemsByMarketClasses,
@@ -80,7 +81,7 @@ export default function ItemsByMarket({
           className={itemsByMarketClasses.empty}
           style={styles.secondaryText}
         >
-          <p className={itemsByMarketClasses.emptyIcon}>🛒</p>
+          <p className={itemsByMarketClasses.emptyIcon}>{ICONS.cart}</p>
           <p className={itemsByMarketClasses.emptyTitle}>Lista vazia</p>
         </div>
       )}

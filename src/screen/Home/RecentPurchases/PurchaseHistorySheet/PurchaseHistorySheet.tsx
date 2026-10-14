@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import { createPurchaseHistoryStyles, historyClasses } from "./PurchaseHistorySheet.styles"
 import type { PurchaseHistoryPalette } from "./PurchaseHistorySheet.styles"
 import { useState } from "react"
@@ -119,7 +120,7 @@ export default function PurchaseHistorySheet({ onClose, expandedDay, setExpanded
             className={historyClasses.compareButton}
             style={styles.compareButton(compareMode)}
           >
-            🧮 Comparar
+            {ICONS.calculator} Comparar
           </button>
         </div>
 
@@ -152,7 +153,7 @@ export default function PurchaseHistorySheet({ onClose, expandedDay, setExpanded
         <div className={historyClasses.daysList}>
           {filtered.length === 0 && (
             <div className={historyClasses.emptyState} style={styles.secondaryText}>
-              <p className={historyClasses.emptyIcon}>🔍</p>
+              <p className={historyClasses.emptyIcon}>{ICONS.search}</p>
               <p className={historyClasses.emptyMessage}>Nenhum registro encontrado</p>
             </div>
           )}
@@ -165,7 +166,7 @@ export default function PurchaseHistorySheet({ onClose, expandedDay, setExpanded
                   onClick={() => setExpandedDay(isOpen ? null : day.date)}
                   className={historyClasses.dayButton}
                 >
-                  <div className={historyClasses.dayIcon} style={styles.dayIcon}>🛒</div>
+                  <div className={historyClasses.dayIcon} style={styles.dayIcon}>{ICONS.cart}</div>
                   <div className={historyClasses.details}>
                     <p className={historyClasses.dayTitle} style={styles.primaryText}>{day.label}</p>
                     <p className={historyClasses.dayMetadata} style={styles.secondaryText}>{day.market} · {day.items} itens</p>

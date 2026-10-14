@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import { sharedClasses, sharedStyles } from "@/screen/shared/styles"
 import { dmPalette, useDark } from "@/theme"
 import type { ReactNode } from "react"
@@ -18,14 +19,14 @@ export default function AccountSettings({
   return (
     <SettingsSection title="Conta">
       <SettingsRow
-        icon="👤"
+        icon={ICONS.user}
         label="Editar perfil"
         sublabel="Nome, foto e dados pessoais"
         onPress={onEditProfile}
       />
       <SettingsDivider />
       <SettingsRow
-        icon="🔒"
+        icon={ICONS.lock}
         label="Alterar senha"
         sublabel="Segurança da conta"
         onPress={onChangePassword}

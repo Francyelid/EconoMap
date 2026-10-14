@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import { useDark } from "@/theme"
 import { statusBarClasses, statusBarStyles } from "./StatusBar.styles"
 
@@ -11,7 +12,7 @@ export default function StatusBar() {
         9:41
       </span>
       <div className={statusBarClasses.indicators} style={statusBarStyles.text}>
-        <span>⚡</span>
+        <span>{ICONS.lightning}</span>
         <span className={statusBarClasses.battery}>92%</span>
       </div>
     </div>

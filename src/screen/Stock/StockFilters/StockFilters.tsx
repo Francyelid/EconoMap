@@ -1,3 +1,4 @@
+import { ICONS } from "@/constants/icons"
 import {
   stockFiltersClasses,
   createStockFiltersStyles,
@@ -19,9 +20,9 @@ export default function StockFilters({ filter, setFilter }: StockFiltersProps) {
       {([
         { k: "all", l: "Todos" },
 
-        { k: "warning", l: "⚠️ Atenção" },
+        { k: "warning", l: <>{ICONS.warning} Atenção</> },
 
-        { k: "expired", l: "🔴 Vencidos" },
+        { k: "expired", l: <>{ICONS.redCircle} Vencidos</> },
       ] as const).map(({ k, l }) => (
         <button
           key={k}
