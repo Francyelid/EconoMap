@@ -1,24 +1,35 @@
-import { ICONS } from "@/constants/icons"
+import { ICONS, MARKET_ICONS } from "@/constants/icons"
+
 import {
   stockItemCardClasses,
   createStockItemCardStyles,
 } from "./StockItemCard.styles"
+
 import { dmPalette, useDark } from "@/theme"
+
 import type { StockItem } from "@/models/StockItem"
+
 import { daysUntil, expiryStatus } from "@/business/stock"
+
 import { CATEGORY_ICONS } from "@/constants/icons"
+
 import { fmtDate } from "@/utils/date"
 
 type StockItemCardProps = {
   item: StockItem
+
   onDelete: (item: StockItem) => void
 }
 
 export default function StockItemCard({ item, onDelete }: StockItemCardProps) {
   const dark = useDark()
+
   const styles = createStockItemCardStyles(dmPalette(dark), dark)
+
   const st = expiryStatus(item.expiry)
+
   const days = daysUntil(item.expiry)
+
   return (
     <div className={stockItemCardClasses.card} style={styles.card(st)}>
       <div className={stockItemCardClasses.row}>
@@ -40,6 +51,17 @@ export default function StockItemCard({ item, onDelete }: StockItemCardProps) {
               >
                 {item.qty} {item.unit} · {item.market}
               </p>
+              <p
+                className="mt-1 flex flex-wrap items-center gap-1 text-[10px]"
+                style={styles.secondaryText}
+              >
+                {item.category}
+                {item.marketType && (
+                  <span className="inline-flex items-center gap-1">
+                    · {MARKET_ICONS[item.marketType]} {item.marketType}
+                  </span>
+                )}
+              </p>
             </div>
             <span
               className={stockItemCardClasses.badge}
@@ -60,12 +82,6 @@ export default function StockItemCard({ item, onDelete }: StockItemCardProps) {
               {ICONS.calendar} {fmtDate(item.expiry)}
             </p>
             <div className={stockItemCardClasses.actions}>
-              <p
-                className={stockItemCardClasses.price}
-                style={styles.primaryText}
-              >
-                R$ {item.purchasePrice.toFixed(2)}
-              </p>
               <button
                 onClick={() => onDelete(item)}
                 className={stockItemCardClasses.deleteButton}

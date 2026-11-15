@@ -140,68 +140,53 @@ export const ICONS = {
   utensils: icon("utensils"),
 } as const
 
-export const CATEGORY_ICONS: Record<ProductCategory, ReactNode> & Record<string, ReactNode> =
-  {
-    "Mercearia básica": ICONS.grain,
+export const CATEGORY_ICONS: Record<ProductCategory, ReactNode> = {
+  "Mercearia básica": ICONS.grain,
 
-    "Massas e molhos": ICONS.pasta,
+  "Massas e molhos": ICONS.pasta,
 
-    "Cafés e chás": ICONS.coffee,
+  "Cafés e chás": ICONS.coffee,
 
-    "Leites e derivados": ICONS.milk,
+  "Leites e derivados": ICONS.milk,
 
-    "Laticínios e frios": ICONS.cheese,
+  "Laticínios e frios": ICONS.cheese,
 
-    "Carnes e aves": ICONS.meat,
+  "Carnes e aves": ICONS.meat,
 
-    "Peixes e frutos do mar": ICONS.fish,
+  "Peixes e frutos do mar": ICONS.fish,
 
-    Hortifrúti: ICONS.apple,
+  Hortifrúti: ICONS.apple,
 
-    "Padaria e confeitaria": ICONS.bread,
+  "Padaria e confeitaria": ICONS.bread,
 
-    "Biscoitos e snacks": ICONS.snacks,
+  "Biscoitos e snacks": ICONS.snacks,
 
-    "Doces e sobremesas": ICONS.candy,
+  "Doces e sobremesas": ICONS.candy,
 
-    Bebidas: ICONS.drink,
+  Bebidas: ICONS.drink,
 
-    Congelados: ICONS.frozen,
+  Congelados: ICONS.frozen,
 
-    "Enlatados e conservas": ICONS.cannedFood,
+  "Enlatados e conservas": ICONS.cannedFood,
 
-    "Temperos e condimentos": ICONS.condiment,
+  "Temperos e condimentos": ICONS.condiment,
 
-    "Cereais e matinais": ICONS.cereal,
+  "Cereais e matinais": ICONS.cereal,
 
-    "Produtos naturais e dietéticos": ICONS.leaf,
+  "Produtos naturais e dietéticos": ICONS.leaf,
 
-    "Higiene pessoal": ICONS.hygiene,
+  "Higiene pessoal": ICONS.hygiene,
 
-    "Limpeza doméstica": ICONS.cleaning,
+  "Limpeza doméstica": ICONS.cleaning,
 
-    "Papel e descartáveis": ICONS.paper,
+  "Papel e descartáveis": ICONS.paper,
 
-    "Bebês e infantil": ICONS.baby,
+  "Bebês e infantil": ICONS.baby,
 
-    "Pet shop": ICONS.pet,
+  "Pet shop": ICONS.pet,
 
-    "Utilidades domésticas": ICONS.utensils,
-
-    // Compatibilidade com categorias dos mocks antigos de estoque e lista.
-
-    Grãos: ICONS.grain,
-
-    Condimentos: ICONS.condiment,
-
-    Massas: ICONS.pasta,
-
-    Laticínios: ICONS.milk,
-
-    Enlatados: ICONS.cannedFood,
-
-    Outros: ICONS.package,
-  }
+  "Utilidades domésticas": ICONS.utensils,
+}
 
 export const MARKET_ICONS: Record<MarketType, ReactNode> = {
   Supermercado: ICONS.store,

@@ -1,35 +1,39 @@
 import StockHeader from "./StockHeader/StockHeader"
+
 import StockSummary from "./StockSummary/StockSummary"
+
 import StockFilters from "./StockFilters/StockFilters"
+
 import type { StockFilter } from "./types"
+
 import {
   stockScreenClasses,
   createStockScreenStyles,
 } from "./StockScreen.styles"
+
 import DeleteStockModal from "./DeleteStockModal/DeleteStockModal"
 
 import AllStock from "./AllStock/AllStock"
+
 import WarningStock from "./WarningStock/WarningStock"
+
 import ExpiredStock from "./ExpiredStock/ExpiredStock"
+
 import { expiryStatus } from "@/business/stock"
 
 import AddToStock from "./AddToStock/AddToStock"
 
 import { useState } from "react"
-import { dmPalette, useDark } from "@/theme"
-import { STOCK_INIT } from "@/services/demo/data"
-import type { StockItem } from "@/models/StockItem"
 
-const STOCK_MARKETS = [
-  "Atacadão Sul",
-  "Feira Livre Central",
-  "Supermercado Bom Preço",
-  "Mercadinho do Bairro",
-  "Hortifruti Verde Vida",
-]
+import { dmPalette, useDark } from "@/theme"
+
+import { STOCK_INIT } from "@/services/demo/data"
+
+import type { StockItem } from "@/models/StockItem"
 
 export default function StockScreen() {
   const dark = useDark()
+
   const pal = dmPalette(dark)
 
   const [items, setItems] = useState<StockItem[]>(STOCK_INIT)
@@ -78,7 +82,6 @@ export default function StockScreen() {
       {/* ── Add item modal ──────────────────── */}
       <AddToStock
         isOpen={showAddModal}
-        markets={STOCK_MARKETS}
         onAdd={(item) => setItems((previous) => [...previous, item])}
         onClose={() => setShowAddModal(false)}
       />
@@ -90,15 +93,18 @@ export default function StockScreen() {
           isAddedToList={addedToList.includes(deleteTarget.id)}
           onAddToListAndDelete={() => {
             setAddedToList((previous) => [...previous, deleteTarget.id])
+
             setItems((previous) =>
               previous.filter((item) => item.id !== deleteTarget.id),
             )
+
             setDeleteTarget(null)
           }}
           onDelete={() => {
             setItems((previous) =>
               previous.filter((item) => item.id !== deleteTarget.id),
             )
+
             setDeleteTarget(null)
           }}
           onClose={() => setDeleteTarget(null)}

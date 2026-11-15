@@ -1,41 +1,64 @@
 import { useId, useState } from "react"
+
 import type { Product } from "@/models/Product"
+
 import { suggestProducts } from "@/business/product"
+
 import { CATEGORY_ICONS, ICONS } from "@/constants/icons"
-import type { ReceiptModalProps } from "../types"
+
+import type { PurchaseFieldPalette } from "./styles"
+
 import {
-  createNewReceiptManualStyles,
-  newReceiptManualClasses as classes,
-} from "./NewReceiptManual.styles"
+  createPurchaseFieldStyles,
+  purchaseFieldClasses as classes,
+} from "./styles"
 
 type Props = {
   products: readonly Product[]
+
   name: string
+
   itemNumber: number
-  palette: ReceiptModalProps["palette"]
+
+  palette: PurchaseFieldPalette
+
   onNameChange: (name: string) => void
+
   onSelect: (product: Product) => void
 }
 
 export default function ProductNameField({
   products,
+
   name,
+
   itemNumber,
+
   palette,
+
   onNameChange,
+
   onSelect,
 }: Props) {
   const id = useId()
-  const styles = createNewReceiptManualStyles(palette)
+
+  const styles = createPurchaseFieldStyles(palette)
+
   const [focused, setFocused] = useState(false)
+
   const [dismissed, setDismissed] = useState(false)
+
   const [active, setActive] = useState(-1)
+
   const suggestions = suggestProducts(products, name)
+
   const open = focused && !dismissed && suggestions.length > 0
 
   function select(product: Product) {
     onSelect(product)
+
     setDismissed(true)
+
     setActive(-1)
   }
 
@@ -64,20 +87,26 @@ export default function ProductNameField({
         onFocus={() => setFocused(true)}
         onChange={(event) => {
           onNameChange(event.target.value)
+
           setDismissed(false)
+
           setActive(-1)
         }}
         onKeyDown={(event) => {
           if (event.key === "Escape") {
             setDismissed(true)
+
             setActive(-1)
           }
+
           if (
             (event.key === "ArrowDown" || event.key === "ArrowUp") &&
             suggestions.length
           ) {
             event.preventDefault()
+
             setDismissed(false)
+
             setActive((previous) =>
               event.key === "ArrowDown"
                 ? (previous + 1) % suggestions.length
@@ -86,8 +115,10 @@ export default function ProductNameField({
                   : previous - 1,
             )
           }
+
           if (event.key === "Enter" && open && active >= 0) {
             event.preventDefault()
+
             select(suggestions[active])
           }
         }}
@@ -109,6 +140,7 @@ export default function ProductNameField({
               className="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5"
               style={{
                 background: active === index ? palette.cardAlt : undefined,
+
                 color: palette.textPrimary,
               }}
               onMouseDown={(event) => event.preventDefault()}

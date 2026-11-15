@@ -5,16 +5,16 @@ import {
 } from "@/models/ProductCategory"
 import { CATEGORY_ICONS } from "@/constants/icons"
 import { PRODUCT_EXAMPLES } from "@/services/demo/products"
-import type { ReceiptModalProps } from "../types"
+import type { PurchaseFieldPalette } from "./styles"
 import {
-  createNewReceiptManualStyles,
-  newReceiptManualClasses as classes,
-} from "./NewReceiptManual.styles"
+  createPurchaseFieldStyles,
+  purchaseFieldClasses as classes,
+} from "./styles"
 
 type Props = {
   category: ProductCategory | ""
   registered: boolean
-  palette: ReceiptModalProps["palette"]
+  palette: PurchaseFieldPalette
   invalid: boolean
   onChange: (category: ProductCategory | "") => void
 }
@@ -27,7 +27,7 @@ export default function ProductCategoryField({
   onChange,
 }: Props) {
   const id = useId()
-  const styles = createNewReceiptManualStyles(palette)
+  const styles = createPurchaseFieldStyles(palette)
   if (registered && category)
     return (
       <p

@@ -15,11 +15,11 @@ import type { MarketType } from "@/models/MarketType"
 
 import { findRegisteredMarket } from "@/business/market"
 
-import EstablishmentField from "./EstablishmentField"
+import EstablishmentField from "@/components/PurchaseFields/EstablishmentField"
 
-import ProductNameField from "./ProductNameField"
+import ProductNameField from "@/components/PurchaseFields/ProductNameField"
 
-import ProductCategoryField from "./ProductCategoryField"
+import ProductCategoryField from "@/components/PurchaseFields/ProductCategoryField"
 
 import { findRegisteredProduct } from "@/business/product"
 

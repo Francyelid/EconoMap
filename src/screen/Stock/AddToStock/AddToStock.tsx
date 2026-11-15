@@ -1,77 +1,43 @@
-import ProductField from "@/components/ProductField/ProductField"
 import QuantityFields from "@/components/QuantityFields/QuantityFields"
-import MarketField from "@/components/MarketField/MarketField"
 import FormActions from "@/components/FormActions/FormActions"
-import StockExpiryField from "../StockExpiryField/StockExpiryField"
-import { addToStockClasses, createAddToStockStyles } from "./AddToStock.styles"
-import { useState } from "react"
+import ItemRegistrationFields from "@/components/PurchaseFields/ItemRegistrationFields"
+import useItemRegistration from "@/hooks/useItemRegistration"
+import { isPositiveReceiptValue } from "@/business/receipt"
 import { dmPalette, useDark } from "@/theme"
 import type { StockItem } from "@/models/StockItem"
+import { useState } from "react"
+import StockExpiryField from "../StockExpiryField/StockExpiryField"
+import { addToStockClasses, createAddToStockStyles } from "./AddToStock.styles"
 
-type AddToStockProps = {
+type Props = {
   isOpen: boolean
-  markets: string[]
   onAdd: (item: StockItem) => void
   onClose: () => void
 }
 
-export default function AddToStock({
-  isOpen,
-  markets,
-  onAdd,
-  onClose,
-}: AddToStockProps) {
+export default function AddToStock({ isOpen, onAdd, onClose }: Props) {
   const pal = dmPalette(useDark())
-
-  const [addName, setAddName] = useState("")
-
-  const [addMarket, setAddMarket] = useState("")
-
-  const [addMarketCustom, setAddMarketCustom] = useState("")
-
-  const [addQty, setAddQty] = useState("1")
-
-  const [addUnit, setAddUnit] = useState("un")
-
-  const [addExpiry, setAddExpiry] = useState("")
-
-  function handleAddItem() {
-    const name = addName.trim()
-
-    if (!name) return
-
-    const market =
-      addMarket === "__custom__"
-        ? addMarketCustom.trim() || "Mercado não registrado"
-        : addMarket || "Mercado não registrado"
-
+  const form = useItemRegistration()
+  const [expiry, setExpiry] = useState("")
+  const styles = createAddToStockStyles(pal)
+  function addItem() {
+    if (!form.validate() || !form.category) return
     onAdd({
-      id: Date.now().toString(),
-      name,
-      qty: addQty,
-      unit: addUnit,
-
-      expiry: addExpiry || "2099-12-31",
-      category: "Outros",
-
+      id: crypto.randomUUID(),
+      name: form.name.trim(),
+      qty: form.qty,
+      unit: form.unit,
+      category: form.category,
+      market: form.market.trim() || "Mercado não registrado",
+      marketType: form.market.trim() ? form.marketType || undefined : undefined,
       purchasePrice: 0,
-      market,
+      expiry: expiry || "2099-12-31",
     })
-
-    setAddName("")
-    setAddMarket("")
-    setAddMarketCustom("")
-    setAddQty("1")
-    setAddUnit("un")
-    setAddExpiry("")
-
+    form.reset()
+    setExpiry("")
     onClose()
   }
-
   if (!isOpen) return null
-
-  const styles = createAddToStockStyles(pal)
-
   return (
     <div
       className={addToStockClasses.overlay}
@@ -79,40 +45,29 @@ export default function AddToStock({
       onClick={onClose}
     >
       <div
-        className={addToStockClasses.sheet}
+        className={`${addToStockClasses.sheet} max-h-[90dvh] overflow-y-auto`}
         style={styles.sheet}
-        onClick={(e) => e.stopPropagation()}
+        onClick={(event) => event.stopPropagation()}
       >
         <div className={addToStockClasses.handle} style={styles.handle} />
         <h2 className={addToStockClasses.title} style={styles.title}>
           Adicionar ao Estoque
         </h2>
-
-        <ProductField
-          addName={addName}
-          setAddName={setAddName}
-          placeholder="Ex: Arroz, Feijão, Leite..."
-        />
+        <ItemRegistrationFields form={form} palette={pal} section="product" />
         <QuantityFields
-          quantityLabel="Quantidade"
-          addQty={addQty}
-          setAddQty={setAddQty}
-          addUnit={addUnit}
-          setAddUnit={setAddUnit}
+          addQty={form.qty}
+          setAddQty={form.setQty}
+          addUnit={form.unit}
+          setAddUnit={form.setUnit}
         />
-        <StockExpiryField addExpiry={addExpiry} setAddExpiry={setAddExpiry} />
-        <MarketField
-          markets={markets}
-          addMarket={addMarket}
-          setAddMarket={setAddMarket}
-          addMarketCustom={addMarketCustom}
-          setAddMarketCustom={setAddMarketCustom}
-        />
-        <FormActions
-          addName={addName}
-          addItem={handleAddItem}
-          onClose={onClose}
-        />
+        {form.attempted && !isPositiveReceiptValue(form.qty) && (
+          <p role="alert" className="text-xs text-red-600">
+            A quantidade deve ser maior que zero.
+          </p>
+        )}
+        <StockExpiryField addExpiry={expiry} setAddExpiry={setExpiry} />
+        <ItemRegistrationFields form={form} palette={pal} section="market" />
+        <FormActions addName={form.name} addItem={addItem} onClose={onClose} />
       </div>
     </div>
   )
