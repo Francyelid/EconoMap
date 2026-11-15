@@ -1,4 +1,4 @@
-import type { StockItem } from "@/interfaces/StockItem"
+import type { StockItem } from "@/models/StockItem"
 
 export const STOCK_INIT: StockItem[] = [
   { id: "1", name: "Arroz", qty: "3", unit: "kg", expiry: "2026-10-15", category: "Grãos", purchasePrice: 28.90, market: "Bom Preço" },

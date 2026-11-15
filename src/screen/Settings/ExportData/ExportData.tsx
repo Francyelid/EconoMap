@@ -3,7 +3,7 @@ import { exportDataClasses, exportDataStyles } from "./ExportData.styles"
 import { sharedClasses, sharedStyles } from "@/screen/shared/styles"
 import { useState } from "react"
 import { dmPalette, useDark } from "@/theme"
-import { PRICE_DATA } from "@/mocks/PRICE_DATA"
+import { PRICE_DATA } from "@/services/demo/data"
 
 type ExportDataProps = {
   isOpen: boolean

@@ -4,11 +4,11 @@ import {
   createDeleteStockModalStyles,
 } from "./DeleteStockModal.styles"
 
-import type { StockItem } from "@/interfaces/StockItem"
+import type { StockItem } from "@/models/StockItem"
 
 import { dmPalette, useDark } from "@/theme"
 
-import { CATEGORY_ICONS } from "../stockUtils"
+import { CATEGORY_ICONS } from "@/constants/icons"
 
 type DeleteStockModalProps = {
   item: StockItem

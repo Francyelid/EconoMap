@@ -3,7 +3,7 @@ import MarketCard from "../MarketCard/MarketCard"
 import MarketFilters from "../MarketFilters/MarketFilters"
 import type { MarketFiltersProps } from "../types"
 import { marketListClasses, createMarketListStyles } from "./MarketList.styles"
-import type { Market } from "@/interfaces/Market"
+import type { Market } from "@/models/Market"
 import { dmPalette, useDark } from "@/theme"
 
 export type { PriceFilter } from "../types"

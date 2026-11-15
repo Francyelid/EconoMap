@@ -3,7 +3,7 @@ import {
   createBasketProductListStyles,
 } from "./BasketProductList.styles"
 import type { dmPalette } from "@/theme"
-import { PRICE_DATA } from "@/mocks/PRICE_DATA"
+import { PRICE_DATA } from "@/services/demo/data"
 import { sharedChartAppearance } from "@/screen/shared/styles"
 
 type BasketProductListProps = {

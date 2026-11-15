@@ -14,10 +14,3 @@ export function expiryStatus(dateStr: string): "expired" | "warning" | "ok" {
   return "ok"
 }
 
-export function fmtDate(dateStr: string) {
-  const [y, m, d] = dateStr.split("-")
-
-  return `${d}/${m}/${y}`
-}
-
-export { CATEGORY_ICONS } from "@/constants/icons"

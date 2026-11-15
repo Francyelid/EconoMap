@@ -10,7 +10,7 @@ import {
 
 import { useState } from "react"
 
-import { TODAY_ITEMS } from "@/mocks/TODAY_ITEMS"
+import { TODAY_ITEMS } from "@/services/demo/data"
 
 type CommunityRecordsProps = {
   onClose: () => void

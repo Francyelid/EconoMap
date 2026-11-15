@@ -1,3 +1,4 @@
+import { shoppingTotal } from "@/business/shopping"
 import ShoppingItemRow from "./ShoppingItemRow/ShoppingItemRow"
 import ShoppingListHeader from "./ShoppingListHeader/ShoppingListHeader"
 import type { ListView } from "./types"
@@ -11,8 +12,8 @@ import ItemsByMarket from "./ItemsByMarket/ItemsByMarket"
 
 import { useState } from "react"
 import { dmPalette, useDark } from "@/theme"
-import { SHOPPING_INIT } from "@/mocks/SHOPPING_INIT"
-import type { ShoppingItem } from "@/interfaces/ShoppingItem"
+import { SHOPPING_INIT } from "@/services/demo/data"
+import type { ShoppingItem } from "@/models/ShoppingItem"
 
 const LIST_MARKETS = [
   "Atacadão Sul",
@@ -49,10 +50,7 @@ export default function ListScreen() {
 
   const checked = items.filter((i) => i.checked)
 
-  const total = unchecked.reduce(
-    (s, i) => s + (i.price ?? 0) * parseFloat(i.qty),
-    0,
-  )
+  const total = shoppingTotal(unchecked)
 
   return (
     <div className={listScreenClasses.screen}>

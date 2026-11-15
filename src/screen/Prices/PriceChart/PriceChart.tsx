@@ -1,9 +1,9 @@
 import { CHART_COLORS } from "./PriceChart.styles"
 import { sharedChartAppearance } from "@/screen/shared/styles"
 import { priceChartClasses, createPriceChartStyles } from "./PriceChart.styles"
-import { MONTHS } from "@/mocks/MONTHS"
+import { MONTHS } from "@/constants/months"
 
-import { PRICE_DATA } from "@/mocks/PRICE_DATA"
+import { PRICE_DATA } from "@/services/demo/data"
 
 export default function PriceChart({
   product,

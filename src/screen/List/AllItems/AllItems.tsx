@@ -5,7 +5,7 @@ import { Fragment } from "react"
 
 import type { ReactNode } from "react"
 
-import type { ShoppingItem } from "@/interfaces/ShoppingItem"
+import type { ShoppingItem } from "@/models/ShoppingItem"
 
 import { dmPalette, useDark } from "@/theme"
 

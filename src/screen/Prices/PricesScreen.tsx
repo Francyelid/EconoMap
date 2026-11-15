@@ -17,7 +17,7 @@ import PriciestMarket from "./PriciestMarket/PriciestMarket"
 
 import { useState } from "react"
 import { dmPalette, useDark } from "@/theme"
-import { PRICE_DATA } from "@/mocks/PRICE_DATA"
+import { PRICE_DATA } from "@/services/demo/data"
 import SeasonalInsight from "./SeasonalInsight/SeasonalInsight"
 
 export default function PricesScreen() {

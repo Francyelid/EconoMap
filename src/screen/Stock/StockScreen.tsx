@@ -11,14 +11,14 @@ import DeleteStockModal from "./DeleteStockModal/DeleteStockModal"
 import AllStock from "./AllStock/AllStock"
 import WarningStock from "./WarningStock/WarningStock"
 import ExpiredStock from "./ExpiredStock/ExpiredStock"
-import { expiryStatus } from "./stockUtils"
+import { expiryStatus } from "@/business/stock"
 
 import AddToStock from "./AddToStock/AddToStock"
 
 import { useState } from "react"
 import { dmPalette, useDark } from "@/theme"
-import { STOCK_INIT } from "@/mocks/STOCK_INIT"
-import type { StockItem } from "@/interfaces/StockItem"
+import { STOCK_INIT } from "@/services/demo/data"
+import type { StockItem } from "@/models/StockItem"
 
 const STOCK_MARKETS = [
   "Atacadão Sul",

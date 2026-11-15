@@ -3,7 +3,7 @@ import {
   basketChartClasses,
   createBasketChartStyles,
 } from "./BasketChart.styles"
-import { MONTHS } from "@/mocks/MONTHS"
+import { MONTHS } from "@/constants/months"
 
 type BasketChartProps = {
   series: number[]
