@@ -16,8 +16,15 @@ import type { MarketType } from "@/models/MarketType"
 import { findRegisteredMarket } from "@/business/market"
 
 import EstablishmentField from "./EstablishmentField"
+
 import ProductNameField from "./ProductNameField"
+
+import ProductCategoryField from "./ProductCategoryField"
+
+import { findRegisteredProduct } from "@/business/product"
+
 import { PRODUCTS } from "@/services/demo/products"
+
 import { isPositiveReceiptValue } from "@/business/receipt"
 
 type NewReceiptManualProps = ReceiptModalProps & {
@@ -60,45 +67,65 @@ type NewReceiptManualProps = ReceiptModalProps & {
 
 export default function NewReceiptManual({
   palette: pal,
+
   onClose,
+
   purchaseDate,
+
   storeName,
+
   cnpj,
+
   address,
+
   receiptItems,
 
   setPurchaseDate,
+
   setStoreName,
+
   setCnpj,
+
   setAddress,
+
   addItem,
+
   updateItem,
+
   removeItem,
 
   onBack,
+
   onReview,
 
   markets,
+
   storeType,
+
   setStoreType,
+
   onSelectMarket,
 }: NewReceiptManualProps) {
   const styles = createNewReceiptManualStyles(pal)
 
   const [typeError, setTypeError] = useState("")
+
   const [reviewAttempted, setReviewAttempted] = useState(false)
 
   function review() {
     setReviewAttempted(true)
+
     if (
       receiptItems.length === 0 ||
       receiptItems.some(
         (item) =>
           !isPositiveReceiptValue(item.qty) ||
-          !isPositiveReceiptValue(item.price),
+          !isPositiveReceiptValue(item.price) ||
+          (item.name.trim().length > 0 && !item.category),
       )
     )
       return
+
     if (
       storeName.trim() &&
       !findRegisteredMarket(markets, storeName) &&
@@ -153,14 +180,17 @@ export default function NewReceiptManual({
             error={typeError}
             onNameChange={(name) => {
               setStoreName(name)
+
               setTypeError("")
             }}
             onSelect={(market) => {
               onSelectMarket(market)
+
               setTypeError("")
             }}
             onTypeChange={(type) => {
               setStoreType(type)
+
               setTypeError("")
             }}
           />
@@ -243,12 +273,35 @@ export default function NewReceiptManual({
                 name={item.name}
                 itemNumber={idx + 1}
                 palette={pal}
-                onNameChange={(name) => updateItem(item.id, "name", name)}
+                onNameChange={(name) => {
+                  updateItem(item.id, "name", name)
+
+                  const match = findRegisteredProduct(PRODUCTS, name, item.unit)
+
+                  updateItem(item.id, "category", match?.category ?? "")
+                }}
                 onSelect={(product) => {
                   updateItem(item.id, "name", product.name)
+
                   updateItem(item.id, "unit", product.unit)
+
+                  updateItem(item.id, "category", product.category)
                 }}
               />
+
+              {item.name.trim() && (
+                <ProductCategoryField
+                  category={item.category}
+                  registered={
+                    !!findRegisteredProduct(PRODUCTS, item.name, item.unit)
+                  }
+                  palette={pal}
+                  invalid={reviewAttempted && !item.category}
+                  onChange={(category) =>
+                    updateItem(item.id, "category", category)
+                  }
+                />
+              )}
 
               <div className={newReceiptManualClasses.itemRow}>
                 <input
