@@ -1,27 +1,31 @@
-import { sharedClasses, sharedStyles } from "@/screen/shared/styles"
-import type { CSSProperties } from "react"
-import type { dmPalette } from "@/theme"
-
-export const marketFiltersClasses = {
-  filters: sharedClasses.list,
-  search: sharedClasses.spaciousSearchContainer,
-  searchInput: sharedClasses.searchInput,
-  clearSearch: sharedClasses.smallText,
-  filterRow: sharedClasses.filterRow,
-  select: sharedClasses.select,
-  priceFilters: sharedClasses.filterGroup,
-  priceFilter: "px-2.5 py-2 text-[10px] font-bold transition-all",
-} as const
+﻿import type { dmPalette } from "@/theme"
 
 export function createMarketFiltersStyles(p: ReturnType<typeof dmPalette>) {
   return {
-    search: sharedStyles.searchContainer(p),
-    primaryText: sharedStyles.primaryText(p),
-    mutedText: sharedStyles.mutedText(p),
-    select: sharedStyles.input(p),
-    priceFilters: sharedStyles.border(p),
-    priceFilter: (active: boolean): CSSProperties =>
-      sharedStyles.selectedFilter(p, active),
-    secondaryText: sharedStyles.secondaryText(p),
+    card: { background: p.card, borderColor: p.border },
+    search: {
+      background: p.inputBg,
+      borderColor: p.border,
+      color: p.textSecondary,
+    },
+    accent: { background: p.greenMuted, color: p.green },
+    text: { color: p.textPrimary },
+    secondary: { color: p.textSecondary },
+    surface: { background: p.cardAlt },
+    divider: { borderColor: p.divider },
+    option: (active: boolean) => ({
+      background: active ? p.greenMuted : p.card,
+      borderColor: active ? p.green : p.border,
+      color: p.textPrimary,
+    }),
+    checkbox: (active: boolean) => ({
+      borderColor: active ? p.green : p.border,
+      background: active ? p.green : "transparent",
+      color: "#fff",
+    }),
+    price: (active: boolean) => ({
+      background: active ? p.green : "transparent",
+      color: active ? "#fff" : p.textSecondary,
+    }),
   }
 }

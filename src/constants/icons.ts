@@ -1,4 +1,5 @@
 import { createElement, type ReactNode } from "react"
+import type { MarketType } from "@/models/MarketType"
 
 // Flaticon Uicons: Thin Rounded. Herda a cor e o tamanho do texto.
 function icon(name: string) {
@@ -52,6 +53,13 @@ export const ICONS = {
   currency: icon("exchange"),
   sun: icon("sun"),
   moon: icon("moon"),
+  basket: icon("shopping-basket"),
+  warehouse: icon("warehouse-alt"),
+  meat: icon("meat"),
+  fish: icon("fish"),
+  bread: icon("bread"),
+  marketplace: icon("marketplace"),
+  browser: icon("browser"),
 } as const
 
 export const CATEGORY_ICONS: Record<string, ReactNode> = {
@@ -64,10 +72,23 @@ export const CATEGORY_ICONS: Record<string, ReactNode> = {
   Outros: ICONS.package,
 }
 
-export const MARKET_ICONS: Record<string, ReactNode> = {
+export const MARKET_ICONS: Record<MarketType, ReactNode> = {
   Supermercado: ICONS.store,
-  Feira: ICONS.vegetables,
-  Atacado: ICONS.package,
-  Mercado: ICONS.cart,
-  Hortifruti: ICONS.apple,
+  Hipermercado: ICONS.departmentStore,
+  Minimercado: ICONS.basket,
+  "Mercado de bairro": ICONS.cart,
+  Atacarejo: ICONS.package,
+  Atacadista: ICONS.warehouse,
+  Mercearia: ICONS.cannedFood,
+  Empório: ICONS.star,
+  Hortifrúti: ICONS.apple,
+  Sacolão: ICONS.vegetables,
+  Açougue: ICONS.meat,
+  Peixaria: ICONS.fish,
+  Padaria: ICONS.bread,
+  "Loja de conveniência": ICONS.coffee,
+  "Mercado municipal": ICONS.community,
+  "Feira livre": ICONS.marketplace,
+  "Mercado orgânico": ICONS.leaf,
+  "Mercado online": ICONS.browser,
 }
