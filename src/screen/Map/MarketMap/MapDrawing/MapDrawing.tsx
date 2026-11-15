@@ -195,6 +195,7 @@ export default function MapDrawing({
       {markets.map((m) => (
         <button
           key={m.id}
+          aria-label={`${m.name}, ${m.type}`}
           onClick={() => onSelectMarket(selected?.id === m.id ? null : m)}
           className={mapDrawingClasses.marker}
           style={styles.pinPosition(m.x, m.y)}

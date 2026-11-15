@@ -42,6 +42,11 @@ export default function MarketMap({
         onToggleRanking={onToggleRanking}
         onSelectMarket={setSelected}
       />
+      {rankedMarkets.length === 0 && (
+        <p role="status" className="py-4 text-center text-xs text-slate-500">
+          Nenhum mercado encontrado
+        </p>
+      )}
     </>
   )
 }

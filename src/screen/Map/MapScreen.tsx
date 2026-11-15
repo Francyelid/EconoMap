@@ -8,6 +8,8 @@ import { MARKETS } from "@/services/demo/data"
 import { dmPalette, useDark } from "@/theme"
 import MarketList from "./MarketList/MarketList"
 import MarketMap from "./MarketMap/MarketMap"
+import MarketFilters from "./MarketFilters/MarketFilters"
+import { MARKET_TYPES, type MarketTypeFilter } from "@/models/MarketType"
 
 export default function MapScreen() {
   const dark = useDark()
@@ -19,15 +21,14 @@ export default function MapScreen() {
 
   const [rankingCollapsed, setRankingCollapsed] = useState(false)
 
-  const [typeFilter, setTypeFilter] = useState("Todos")
+  const [typeFilter, setTypeFilter] = useState<MarketTypeFilter>([])
 
   const [searchFilter, setSearchFilter] = useState("")
 
   const [priceFilter, setPriceFilter] = useState<PriceFilter>("all")
 
-  const allTypes = ["Todos", ...Array.from(new Set(MARKETS.map((m) => m.type)))]
-
   const sorted = filterMarkets(MARKETS, typeFilter, searchFilter, priceFilter)
+  const visibleSelected = selected && sorted.some((market) => market.id === selected.id) ? selected : null
 
   const styles = createMapScreenStyles(p)
 
@@ -36,11 +37,21 @@ export default function MapScreen() {
       <MapHeader palette={p} dark={dark} view={view} onViewChange={setView} />
 
       <div className={mapScreenClasses.content} style={styles.background}>
+        <MarketFilters
+          palette={p}
+          allTypes={MARKET_TYPES}
+          searchFilter={searchFilter}
+          onSearchFilterChange={setSearchFilter}
+          typeFilter={typeFilter}
+          onTypeFilterChange={setTypeFilter}
+          priceFilter={priceFilter}
+          onPriceFilterChange={setPriceFilter}
+        />
         {view === "map" && (
           <MarketMap
-            markets={MARKETS}
+            markets={sorted}
             rankedMarkets={sorted}
-            selected={selected}
+            selected={visibleSelected}
             onSelectMarket={setSelected}
             rankingCollapsed={rankingCollapsed}
             onToggleRanking={() => setRankingCollapsed((c) => !c)}
@@ -50,13 +61,6 @@ export default function MapScreen() {
         {view === "list" && (
           <MarketList
             markets={sorted}
-            allTypes={allTypes}
-            searchFilter={searchFilter}
-            onSearchFilterChange={setSearchFilter}
-            typeFilter={typeFilter}
-            onTypeFilterChange={setTypeFilter}
-            priceFilter={priceFilter}
-            onPriceFilterChange={setPriceFilter}
           />
         )}
       </div>
