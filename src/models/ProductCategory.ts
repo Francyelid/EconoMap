@@ -1,0 +1,27 @@
+export const PRODUCT_CATEGORIES = [
+  "Mercearia básica",
+  "Massas e molhos",
+  "Cafés e chás",
+  "Leites e derivados",
+  "Laticínios e frios",
+  "Carnes e aves",
+  "Peixes e frutos do mar",
+  "Hortifrúti",
+  "Padaria e confeitaria",
+  "Biscoitos e snacks",
+  "Doces e sobremesas",
+  "Bebidas",
+  "Congelados",
+  "Enlatados e conservas",
+  "Temperos e condimentos",
+  "Cereais e matinais",
+  "Produtos naturais e dietéticos",
+  "Higiene pessoal",
+  "Limpeza doméstica",
+  "Papel e descartáveis",
+  "Bebês e infantil",
+  "Pet shop",
+  "Utilidades domésticas",
+] as const
+
+export type ProductCategory = typeof PRODUCT_CATEGORIES[number]

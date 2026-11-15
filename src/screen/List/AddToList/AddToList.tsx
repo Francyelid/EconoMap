@@ -1,71 +1,42 @@
-import ProductField from "@/components/ProductField/ProductField"
 import QuantityFields from "@/components/QuantityFields/QuantityFields"
-import MarketField from "@/components/MarketField/MarketField"
 import FormActions from "@/components/FormActions/FormActions"
-import { addToListClasses, createAddToListStyles } from "./AddToList.styles"
-import { useState } from "react"
+import ItemRegistrationFields from "@/components/PurchaseFields/ItemRegistrationFields"
+import useItemRegistration from "@/hooks/useItemRegistration"
+import { isPositiveReceiptValue } from "@/business/receipt"
 import { dmPalette, useDark } from "@/theme"
 import type { ShoppingItem } from "@/models/ShoppingItem"
 
-type AddToListProps = {
+import { addToListClasses, createAddToListStyles } from "./AddToList.styles"
+
+type Props = {
   isOpen: boolean
-  markets: string[]
   onAdd: (item: ShoppingItem) => void
   onClose: () => void
 }
 
-export default function AddToList({
-  isOpen,
-  markets,
-  onAdd,
-  onClose,
-}: AddToListProps) {
+export default function AddToList({ isOpen, onAdd, onClose }: Props) {
   const pal = dmPalette(useDark())
+  const form = useItemRegistration({ allowUnassignedMarket: true })
 
-  const [addName, setAddName] = useState("")
-
-  const [addMarket, setAddMarket] = useState("")
-
-  const [addMarketCustom, setAddMarketCustom] = useState("")
-
-  const [addQty, setAddQty] = useState("1")
-
-  const [addUnit, setAddUnit] = useState("un")
-
-  const addItem = () => {
-    const name = addName.trim()
-
-    if (!name) return
-
-    const market =
-      addMarket === "__custom__"
-        ? addMarketCustom.trim() || undefined
-        : addMarket || undefined
-
+  const styles = createAddToListStyles(pal)
+  function addItem() {
+    if (!form.validate() || !form.category) return
     onAdd({
-      id: Date.now().toString(),
-      name,
-      qty: addQty,
-      unit: addUnit,
+      id: crypto.randomUUID(),
+      name: form.name.trim(),
+      qty: form.qty,
+      unit: form.unit,
+      category: form.category,
+      market: form.market.trim() || undefined,
+      marketType: form.market.trim() ? form.marketType || undefined : undefined,
       price: null,
       checked: false,
-      category: "Outros",
-      market,
     })
-
-    setAddName("")
-    setAddMarket("")
-    setAddMarketCustom("")
-    setAddQty("1")
-    setAddUnit("un")
+    form.reset()
 
     onClose()
   }
-
   if (!isOpen) return null
-
-  const styles = createAddToListStyles(pal)
-
   return (
     <div
       className={addToListClasses.overlay}
@@ -73,37 +44,34 @@ export default function AddToList({
       onClick={onClose}
     >
       <div
-        className={addToListClasses.sheet}
+        className={`${addToListClasses.sheet} max-h-[90dvh] overflow-y-auto`}
         style={styles.sheet}
-        onClick={(e) => e.stopPropagation()}
+        onClick={(event) => event.stopPropagation()}
       >
         <div className={addToListClasses.handle} style={styles.handle} />
         <h2 className={addToListClasses.title} style={styles.title}>
           Adicionar à Lista
         </h2>
-
-        <ProductField
-          addName={addName}
-          setAddName={setAddName}
-          addItem={addItem}
-        />
-
+        <ItemRegistrationFields form={form} palette={pal} section="product" />
         <QuantityFields
-          addQty={addQty}
-          setAddQty={setAddQty}
-          addUnit={addUnit}
-          setAddUnit={setAddUnit}
+          addQty={form.qty}
+          setAddQty={form.setQty}
+          addUnit={form.unit}
+          setAddUnit={form.setUnit}
         />
+        {form.attempted && !isPositiveReceiptValue(form.qty) && (
+          <p role="alert" className="text-xs text-red-600">
+            A quantidade deve ser maior que zero.
+          </p>
+        )}
 
-        <MarketField
-          markets={markets}
-          addMarket={addMarket}
-          setAddMarket={setAddMarket}
-          addMarketCustom={addMarketCustom}
-          setAddMarketCustom={setAddMarketCustom}
+        <ItemRegistrationFields
+          form={form}
+          palette={pal}
+          section="market"
+          allowUnassignedMarket
         />
-
-        <FormActions addName={addName} addItem={addItem} onClose={onClose} />
+        <FormActions addName={form.name} addItem={addItem} onClose={onClose} />
       </div>
     </div>
   )

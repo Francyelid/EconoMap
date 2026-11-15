@@ -1,4 +1,4 @@
-import { ICONS, MARKET_ICONS } from "@/constants/icons"
+import { ICONS, MARKET_ICONS, CATEGORY_ICONS } from "@/constants/icons"
 
 import { MARKETS } from "@/services/demo/data"
 
@@ -25,6 +25,7 @@ import { useState } from "react"
 
 export default function ReceiptModal({
   onClose,
+
   palette: pal,
 }: ReceiptModalProps) {
   const styles = createReceiptModalStyles(pal)
@@ -42,7 +43,15 @@ export default function ReceiptModal({
   const [address, setAddress] = useState("")
 
   const [receiptItems, setReceiptItems] = useState<ReceiptItem[]>([
-    { id: "1", name: "", qty: "1", unit: "un", price: "", expiry: "" },
+    {
+      id: "1",
+      name: "",
+      qty: "1",
+      unit: "un",
+      price: "",
+      expiry: "",
+      category: "",
+    },
   ])
 
   const [shareWithUsers, setShareWithUsers] = useState(true)
@@ -71,13 +80,20 @@ export default function ReceiptModal({
   function addItem() {
     setReceiptItems((prev) => [
       ...prev,
+
       {
         id: String(Date.now()),
+
         name: "",
+
         qty: "1",
+
         unit: "un",
+
         price: "",
+
         expiry: "",
+        category: "",
       },
     ])
   }
@@ -218,6 +234,14 @@ export default function ReceiptModal({
                         style={styles.primaryText}
                       >
                         {item.name || `Item ${idx + 1}`}
+                        {item.category && (
+                          <span
+                            className="mt-1 flex items-center gap-2 text-xs font-normal"
+                            style={styles.secondaryText}
+                          >
+                            {CATEGORY_ICONS[item.category]} {item.category}
+                          </span>
+                        )}
                       </p>
                       <p
                         className={receiptModalClasses.caption}

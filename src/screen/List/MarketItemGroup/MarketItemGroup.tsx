@@ -1,9 +1,13 @@
-import { shoppingTotal } from "@/business/shopping"
 import { ICONS } from "@/constants/icons"
+
 import { Fragment } from "react"
+
 import type { ReactNode } from "react"
+
 import type { ShoppingItem } from "@/models/ShoppingItem"
+
 import { dmPalette, useDark } from "@/theme"
+
 import {
   marketItemGroupClasses,
   createMarketItemGroupStyles,
@@ -11,17 +15,21 @@ import {
 
 type MarketItemGroupProps = {
   market?: string
+
   items: ShoppingItem[]
+
   renderItem: (item: ShoppingItem) => ReactNode
 }
 
 export default function MarketItemGroup({
   market,
+
   items,
+
   renderItem,
 }: MarketItemGroupProps) {
   const styles = createMarketItemGroupStyles(dmPalette(useDark()))
-  const subtotal = shoppingTotal(items)
+
   return (
     <div>
       <div className={marketItemGroupClasses.header}>
@@ -38,11 +46,6 @@ export default function MarketItemGroup({
           className={marketItemGroupClasses.divider}
           style={styles.divider}
         />
-        {market && (
-          <p className={marketItemGroupClasses.subtotal} style={styles.accent}>
-            R$ {subtotal.toFixed(2)}
-          </p>
-        )}
       </div>
       <div className={marketItemGroupClasses.items}>
         {items.map((item) => (

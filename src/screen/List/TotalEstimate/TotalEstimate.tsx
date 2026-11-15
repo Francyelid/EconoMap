@@ -4,16 +4,12 @@ import {
 } from "./TotalEstimate.styles"
 
 type TotalEstimateProps = {
-  total: number
-
   completedCount: number
 
   itemCount: number
 }
 
 export default function TotalEstimate({
-  total,
-
   completedCount,
 
   itemCount,
@@ -26,8 +22,8 @@ export default function TotalEstimate({
     <div className={totalEstimateClasses.card} style={styles.card}>
       <div className={totalEstimateClasses.summary}>
         <div>
-          <p className={totalEstimateClasses.label}>Estimativa total</p>
-          <p className={totalEstimateClasses.total}>R$ {total.toFixed(2)}</p>
+          <p className={totalEstimateClasses.label}>Progresso da lista</p>
+          <p className={totalEstimateClasses.total}>{Math.round(progress)}%</p>
         </div>
         <div className={totalEstimateClasses.completed}>
           <p className={totalEstimateClasses.label}>Concluídos</p>

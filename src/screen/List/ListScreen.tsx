@@ -1,7 +1,13 @@
-import { shoppingTotal } from "@/business/shopping"
+import { findRegisteredMarket } from "@/business/market"
+
+import { MARKETS } from "@/services/demo/data"
+
 import ShoppingItemRow from "./ShoppingItemRow/ShoppingItemRow"
+
 import ShoppingListHeader from "./ShoppingListHeader/ShoppingListHeader"
+
 import type { ListView } from "./types"
+
 import { listScreenClasses, createListScreenStyles } from "./ListScreen.styles"
 
 import AddToList from "./AddToList/AddToList"
@@ -11,23 +17,32 @@ import AllItems from "./AllItems/AllItems"
 import ItemsByMarket from "./ItemsByMarket/ItemsByMarket"
 
 import { useState } from "react"
+
 import { dmPalette, useDark } from "@/theme"
+
 import { SHOPPING_INIT } from "@/services/demo/data"
+
 import type { ShoppingItem } from "@/models/ShoppingItem"
 
 const LIST_MARKETS = [
   "Atacadão Sul",
+
   "Feira Livre Central",
+
   "Supermercado Bom Preço",
+
   "Mercadinho do Bairro",
+
   "Hortifruti Verde Vida",
 ]
 
 export default function ListScreen() {
   const dark = useDark()
+
   const pal = dmPalette(dark)
 
   const styles = createListScreenStyles(pal)
+
   const [items, setItems] = useState<ShoppingItem[]>(SHOPPING_INIT)
 
   const [showAddModal, setShowAddModal] = useState(false)
@@ -44,13 +59,21 @@ export default function ListScreen() {
   const remove = (id: string) => setItems((p) => p.filter((i) => i.id !== id))
 
   const setMarket = (id: string, mkt: string | undefined) =>
-    setItems((p) => p.map((i) => (i.id === id ? { ...i, market: mkt } : i)))
+    setItems((p) =>
+      p.map((i) =>
+        i.id === id
+          ? {
+              ...i,
+              market: mkt,
+              marketType: findRegisteredMarket(MARKETS, mkt ?? "")?.type,
+            }
+          : i,
+      ),
+    )
 
   const unchecked = items.filter((i) => !i.checked)
 
   const checked = items.filter((i) => i.checked)
-
-  const total = shoppingTotal(unchecked)
 
   return (
     <div className={listScreenClasses.screen}>
@@ -58,7 +81,6 @@ export default function ListScreen() {
         remainingCount={unchecked.length}
         completedCount={checked.length}
         itemCount={items.length}
-        total={total}
         listView={listView}
         setListView={setListView}
         onAdd={() => setShowAddModal(true)}
@@ -105,7 +127,6 @@ export default function ListScreen() {
       {/* ── Add item modal ── */}
       <AddToList
         isOpen={showAddModal}
-        markets={LIST_MARKETS}
         onAdd={(item) => setItems((previous) => [...previous, item])}
         onClose={() => setShowAddModal(false)}
       />

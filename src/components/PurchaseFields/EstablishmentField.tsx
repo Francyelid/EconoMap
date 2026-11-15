@@ -1,50 +1,81 @@
 import { useId, useState } from "react"
+
 import type { Market } from "@/models/Market"
+
 import { MARKET_TYPES, type MarketType } from "@/models/MarketType"
+
 import { findRegisteredMarket, suggestMarkets } from "@/business/market"
+
 import { MARKET_ICONS } from "@/constants/icons"
+
 import { MARKET_TYPE_DESCRIPTIONS } from "@/constants/marketTypes"
-import type { ReceiptModalProps } from "../types"
+
+import type { PurchaseFieldPalette } from "./styles"
+
 import {
-  createNewReceiptManualStyles,
-  newReceiptManualClasses as classes,
-} from "./NewReceiptManual.styles"
+  createPurchaseFieldStyles,
+  purchaseFieldClasses as classes,
+} from "./styles"
 
 type Props = {
   markets: readonly Market[]
+
   name: string
+
   type: MarketType | ""
-  palette: ReceiptModalProps["palette"]
+
+  palette: PurchaseFieldPalette
+
   error: string
+
   onNameChange: (name: string) => void
+
   onSelect: (market: Market) => void
+
   onTypeChange: (type: MarketType | "") => void
 }
 
 export default function EstablishmentField({
   markets,
+
   name,
+
   type,
+
   palette,
+
   error,
+
   onNameChange,
+
   onSelect,
+
   onTypeChange,
 }: Props) {
   const id = useId()
-  const styles = createNewReceiptManualStyles(palette)
+
+  const styles = createPurchaseFieldStyles(palette)
+
   const [focused, setFocused] = useState(false)
+
   const [dismissed, setDismissed] = useState(false)
+
   const [active, setActive] = useState(-1)
+
   const suggestions = suggestMarkets(markets, name)
+
   const registered = findRegisteredMarket(markets, name)
+
   const open =
     focused && !dismissed && name.trim().length > 0 && suggestions.length > 0
+
   const isNew = name.trim().length > 0 && !registered
 
   function select(market: Market) {
     onSelect(market)
+
     setDismissed(true)
+
     setActive(-1)
   }
 
@@ -77,21 +108,27 @@ export default function EstablishmentField({
           onFocus={() => setFocused(true)}
           onChange={(event) => {
             onNameChange(event.target.value)
+
             setDismissed(false)
+
             setActive(-1)
           }}
           onKeyDown={(event) => {
             if (event.key === "Escape") {
               setDismissed(true)
+
               setActive(-1)
             }
+
             if (
               (event.key === "ArrowDown" || event.key === "ArrowUp") &&
               suggestions.length &&
               name.trim()
             ) {
               event.preventDefault()
+
               setDismissed(false)
+
               setActive((previous) =>
                 event.key === "ArrowDown"
                   ? (previous + 1) % suggestions.length
@@ -100,8 +137,10 @@ export default function EstablishmentField({
                     : previous - 1,
               )
             }
+
             if (event.key === "Enter" && open && active >= 0) {
               event.preventDefault()
+
               select(suggestions[active])
             }
           }}
@@ -123,6 +162,7 @@ export default function EstablishmentField({
                 className="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5"
                 style={{
                   background: active === index ? palette.cardAlt : undefined,
+
                   color: palette.textPrimary,
                 }}
                 onMouseDown={(event) => event.preventDefault()}
@@ -175,6 +215,7 @@ export default function EstablishmentField({
             style={styles.input}
             onChange={(event) => {
               const value = event.target.value
+
               onTypeChange(MARKET_TYPES.find((item) => item === value) ?? "")
             }}
           >
