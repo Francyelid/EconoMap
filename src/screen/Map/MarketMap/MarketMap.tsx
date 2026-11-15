@@ -1,5 +1,5 @@
 import SelectedMarketCard from "../SelectedMarketCard/SelectedMarketCard"
-import type { Market } from "@/interfaces/Market"
+import type { Market } from "@/models/Market"
 import MapDrawing from "./MapDrawing/MapDrawing"
 import MarketRanking from "./Ranking/MarketRanking"
 

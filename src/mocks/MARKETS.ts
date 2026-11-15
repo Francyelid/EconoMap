@@ -1,4 +1,4 @@
-import type { Market } from "@/interfaces/Market"
+import type { Market } from "@/models/Market"
 
 export const MARKETS: Market[] = [
   { id: "1", name: "Supermercado Bom Preço", address: "Av. Brasil, 1200", distance: 0.8, priceIndex: 62, type: "Supermercado", x: 33, y: 40, rating: 4.2, registros: 47 },

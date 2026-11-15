@@ -3,7 +3,7 @@ import {
   selectedMarketCardClasses,
   createSelectedMarketCardStyles,
 } from "./SelectedMarketCard.styles"
-import type { Market } from "@/interfaces/Market"
+import type { Market } from "@/models/Market"
 import { priceLabel, MARKET_ICONS } from "../marketUtils"
 
 type SelectedMarketCardProps = {

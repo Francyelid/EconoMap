@@ -1,6 +1,6 @@
 import { ICONS } from "@/constants/icons"
 import { marketCardClasses, createMarketCardStyles } from "./MarketCard.styles"
-import type { Market } from "@/interfaces/Market"
+import type { Market } from "@/models/Market"
 import type { dmPalette } from "@/theme"
 import { priceLabel, MARKET_ICONS } from "../marketUtils"
 import PriceIndex from "../PriceIndex/PriceIndex"

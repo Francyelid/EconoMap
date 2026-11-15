@@ -1,5 +1,6 @@
 export type MapView = "map" | "list"
-export type PriceFilter = "all" | "cheap" | "mid" | "expensive"
+import type { PriceFilter } from "@/business/market"
+export type { PriceFilter } from "@/business/market"
 
 export type MarketFiltersProps = {
   allTypes: string[]

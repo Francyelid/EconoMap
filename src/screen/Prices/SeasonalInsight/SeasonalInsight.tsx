@@ -3,7 +3,7 @@ import {
   seasonalInsightClasses,
   createSeasonalInsightStyles,
 } from "./SeasonalInsight.styles"
-import { SEASONAL_HINTS } from "@/mocks/SEASONAL_HINTS"
+import { SEASONAL_HINTS } from "@/services/demo/data"
 import { dmPalette, useDark } from "@/theme"
 
 type SeasonalInsightProps = {

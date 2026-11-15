@@ -1,9 +1,10 @@
+import { filterMarkets } from "@/business/market"
 import MapHeader from "./MapHeader/MapHeader"
 import type { MapView, PriceFilter } from "./types"
 import { mapScreenClasses, createMapScreenStyles } from "./MapScreen.styles"
 import { useState } from "react"
-import type { Market } from "@/interfaces/Market"
-import { MARKETS } from "@/mocks/MARKETS"
+import type { Market } from "@/models/Market"
+import { MARKETS } from "@/services/demo/data"
 import { dmPalette, useDark } from "@/theme"
 import MarketList from "./MarketList/MarketList"
 import MarketMap from "./MarketMap/MarketMap"
@@ -26,29 +27,7 @@ export default function MapScreen() {
 
   const allTypes = ["Todos", ...Array.from(new Set(MARKETS.map((m) => m.type)))]
 
-  const sorted = [...MARKETS]
-
-    .filter((m) => {
-      if (typeFilter !== "Todos" && m.type !== typeFilter) return false
-
-      if (
-        searchFilter &&
-        !m.name.toLowerCase().includes(searchFilter.toLowerCase()) &&
-        !m.address.toLowerCase().includes(searchFilter.toLowerCase())
-      )
-        return false
-
-      if (priceFilter === "cheap" && m.priceIndex > 45) return false
-
-      if (priceFilter === "mid" && (m.priceIndex <= 45 || m.priceIndex > 65))
-        return false
-
-      if (priceFilter === "expensive" && m.priceIndex <= 65) return false
-
-      return true
-    })
-
-    .sort((a, b) => a.priceIndex - b.priceIndex)
+  const sorted = filterMarkets(MARKETS, typeFilter, searchFilter, priceFilter)
 
   const styles = createMapScreenStyles(p)
 

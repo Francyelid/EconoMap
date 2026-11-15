@@ -5,7 +5,7 @@ import FormActions from "@/components/FormActions/FormActions"
 import { addToListClasses, createAddToListStyles } from "./AddToList.styles"
 import { useState } from "react"
 import { dmPalette, useDark } from "@/theme"
-import type { ShoppingItem } from "@/interfaces/ShoppingItem"
+import type { ShoppingItem } from "@/models/ShoppingItem"
 
 type AddToListProps = {
   isOpen: boolean

@@ -4,7 +4,7 @@ import {
   stockItemsListClasses,
   createStockItemsListStyles,
 } from "./StockItemsList.styles"
-import type { StockItem } from "@/interfaces/StockItem"
+import type { StockItem } from "@/models/StockItem"
 import { dmPalette, useDark } from "@/theme"
 
 export type StockItemsListProps = {

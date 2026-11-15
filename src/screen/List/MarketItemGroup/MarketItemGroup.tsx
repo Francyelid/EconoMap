@@ -1,7 +1,8 @@
+import { shoppingTotal } from "@/business/shopping"
 import { ICONS } from "@/constants/icons"
 import { Fragment } from "react"
 import type { ReactNode } from "react"
-import type { ShoppingItem } from "@/interfaces/ShoppingItem"
+import type { ShoppingItem } from "@/models/ShoppingItem"
 import { dmPalette, useDark } from "@/theme"
 import {
   marketItemGroupClasses,
@@ -20,10 +21,7 @@ export default function MarketItemGroup({
   renderItem,
 }: MarketItemGroupProps) {
   const styles = createMarketItemGroupStyles(dmPalette(useDark()))
-  const subtotal = items.reduce(
-    (sum, item) => sum + (item.price ?? 0) * parseFloat(item.qty),
-    0,
-  )
+  const subtotal = shoppingTotal(items)
   return (
     <div>
       <div className={marketItemGroupClasses.header}>

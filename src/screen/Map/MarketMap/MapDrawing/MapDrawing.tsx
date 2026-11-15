@@ -6,7 +6,7 @@ import {
   priceLegend,
 } from "./MapDrawing.styles"
 
-import type { Market } from "@/interfaces/Market"
+import type { Market } from "@/models/Market"
 
 import { MARKET_ICONS } from "../../marketUtils"
 

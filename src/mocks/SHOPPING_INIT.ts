@@ -1,4 +1,4 @@
-import type { ShoppingItem } from "@/interfaces/ShoppingItem"
+import type { ShoppingItem } from "@/models/ShoppingItem"
 
 export const SHOPPING_INIT: ShoppingItem[] = [
   { id: "1", name: "Arroz", qty: "5", unit: "kg", price: 28.90, checked: false, category: "Grãos", market: "Atacadão Sul" },

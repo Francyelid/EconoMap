@@ -9,8 +9,8 @@ import {
 
 import { useState } from "react"
 import { dmPalette, useDark } from "@/theme"
-import { MONTHS } from "@/mocks/MONTHS"
-import { PRICE_DATA } from "@/mocks/PRICE_DATA"
+import { MONTHS } from "@/constants/months"
+import { PRICE_DATA } from "@/services/demo/data"
 
 type PurchaseCalculatorProps = {
   products: string[]

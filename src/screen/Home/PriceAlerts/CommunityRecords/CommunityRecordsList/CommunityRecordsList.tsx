@@ -3,7 +3,7 @@ import {
   createCommunityRecordsListStyles,
   communityRecordsListClasses,
 } from "./CommunityRecordsList.styles"
-import type { TODAY_ITEMS } from "@/mocks/TODAY_ITEMS"
+import type { CommunityRecord } from "@/models/CommunityRecord"
 import type { dmPalette } from "@/theme"
 
 type TrendBadgeProps = {
@@ -12,7 +12,7 @@ type TrendBadgeProps = {
 }
 
 type CommunityRecordsListProps = {
-  items: typeof TODAY_ITEMS
+  items: CommunityRecord[]
   palette: Pick<ReturnType<typeof dmPalette>, "bg" | "card" | "cardAlt" | "border" | "textPrimary" | "textSecondary" | "greenMuted">
 }
 
@@ -21,7 +21,7 @@ export default function CommunityRecordsList({
   palette,
 }: CommunityRecordsListProps) {
   const styles = createCommunityRecordsListStyles(palette)
-  const groups: Record<string, typeof TODAY_ITEMS> = {}
+  const groups: Record<string, CommunityRecord[]> = {}
 
   items.forEach((item) => {
     const key = `${item.time} · ${item.market}`

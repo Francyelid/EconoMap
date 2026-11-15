@@ -1,4 +1,6 @@
-export const PRICE_DATA: Record<string, Record<string, number[]>> = {
+import type { PriceHistory } from "@/models/PriceHistory"
+
+export const PRICE_DATA: PriceHistory = {
   "Arroz 5kg": {
     "Bom Preço":  [28.90, 29.50, 31.20, 30.00, 28.50, 27.90, 29.00, 30.50],
     "Atacadão":   [24.50, 24.80, 26.00, 25.50, 24.00, 23.50, 24.20, 25.80],

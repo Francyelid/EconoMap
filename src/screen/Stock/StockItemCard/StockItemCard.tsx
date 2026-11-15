@@ -4,8 +4,10 @@ import {
   createStockItemCardStyles,
 } from "./StockItemCard.styles"
 import { dmPalette, useDark } from "@/theme"
-import type { StockItem } from "@/interfaces/StockItem"
-import { CATEGORY_ICONS, daysUntil, expiryStatus, fmtDate } from "../stockUtils"
+import type { StockItem } from "@/models/StockItem"
+import { daysUntil, expiryStatus } from "@/business/stock"
+import { CATEGORY_ICONS } from "@/constants/icons"
+import { fmtDate } from "@/utils/date"
 
 type StockItemCardProps = {
   item: StockItem

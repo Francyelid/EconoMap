@@ -6,7 +6,7 @@ import StockExpiryField from "../StockExpiryField/StockExpiryField"
 import { addToStockClasses, createAddToStockStyles } from "./AddToStock.styles"
 import { useState } from "react"
 import { dmPalette, useDark } from "@/theme"
-import type { StockItem } from "@/interfaces/StockItem"
+import type { StockItem } from "@/models/StockItem"
 
 type AddToStockProps = {
   isOpen: boolean

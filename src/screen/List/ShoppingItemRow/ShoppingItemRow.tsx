@@ -4,7 +4,7 @@ import {
   createShoppingItemRowStyles,
 } from "./ShoppingItemRow.styles"
 import { dmPalette, useDark } from "@/theme"
-import type { ShoppingItem } from "@/interfaces/ShoppingItem"
+import type { ShoppingItem } from "@/models/ShoppingItem"
 
 type ShoppingItemRowProps = {
   item: ShoppingItem

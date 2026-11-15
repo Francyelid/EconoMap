@@ -2,7 +2,7 @@ import { ICONS } from "@/constants/icons"
 import { createPurchaseHistoryStyles, historyClasses } from "./PurchaseHistorySheet.styles"
 import type { PurchaseHistoryPalette } from "./PurchaseHistorySheet.styles"
 import { useState } from "react"
-import { TODAY_ITEMS } from "@/mocks/TODAY_ITEMS"
+import { TODAY_ITEMS } from "@/services/demo/data"
 
 const ALL_PURCHASES = [
   {
