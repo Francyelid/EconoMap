@@ -1,20 +1,37 @@
 import { CHART_COLORS } from "./PriceChart.styles"
+
 import { sharedChartAppearance } from "@/screen/shared/styles"
+
 import { priceChartClasses, createPriceChartStyles } from "./PriceChart.styles"
+
 import { MONTHS } from "@/constants/months"
 
 import { PRICE_DATA } from "@/services/demo/data"
 
+import type { PriceHistory } from "@/models/PriceHistory"
+
 export default function PriceChart({
   product,
+
   markets,
+
   period = "all",
+
+  history = PRICE_DATA,
+
+  months = MONTHS,
 }: {
   product: string
+
   markets: string[]
+
   period?: "7d" | "30d" | "90d" | "all"
+
+  history?: PriceHistory
+
+  months?: string[]
 }) {
-  const data = PRICE_DATA[product]
+  const data = history[product]
 
   if (!data || markets.length === 0) return null
 
@@ -28,10 +45,12 @@ export default function PriceChart({
 
   const slicedMonths =
     period === "all"
-      ? MONTHS
-      : MONTHS.slice(-(period === "7d" ? 7 : period === "30d" ? 30 : 90))
+      ? months
+      : months.slice(-(period === "7d" ? 7 : period === "30d" ? 30 : 90))
 
   const vals = markets.flatMap((m) => slice(data[m] ?? []))
+
+  if (vals.length === 0) return null
 
   const lo = Math.min(...vals) * 0.92
 

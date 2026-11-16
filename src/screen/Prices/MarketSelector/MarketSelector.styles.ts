@@ -1,24 +1,27 @@
 import { sharedClasses } from "@/screen/shared/styles"
+
 import type { CSSProperties } from "react"
-import { CHART_COLORS } from "../PriceChart/PriceChart.styles"
+
+import type { dmPalette } from "@/theme"
 
 export const marketSelectorClasses = {
-  sectionLabel: sharedClasses.selectionLabel,
+  sectionLabel: "mb-2 text-xs font-semibold",
+
   markets: "flex gap-2 flex-wrap",
+
   marketButton:
-    "px-3 py-1.5 rounded-xl text-xs font-semibold border-2 transition-all",
+    "min-h-10 px-3 py-2 rounded-xl text-xs font-semibold border transition-colors focus-visible:outline-2 focus-visible:outline-green-600",
 } as const
 
-export function createMarketSelectorStyles() {
+export function createMarketSelectorStyles(pal: ReturnType<typeof dmPalette>) {
   return {
-    marketButton: (active: boolean, index: number): CSSProperties => {
-      const col = CHART_COLORS[index % CHART_COLORS.length]
+    marketButton: (active: boolean): CSSProperties => {
       return {
-        borderColor: active ? col : "#e2e8f0",
+        borderColor: active ? pal.green : pal.border,
 
-        background: active ? col + "22" : "white",
+        background: active ? pal.green : pal.cardAlt,
 
-        color: active ? col : "#94a3b8",
+        color: active ? "#fff" : pal.textSecondary,
       }
     },
   }

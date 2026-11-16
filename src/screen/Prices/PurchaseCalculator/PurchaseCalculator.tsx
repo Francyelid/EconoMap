@@ -1,113 +1,112 @@
+﻿import { useState } from "react"
 import CalculatorHeader from "./CalculatorHeader/CalculatorHeader"
 import BasketSummary from "./BasketSummary/BasketSummary"
 import BasketProductList from "./BasketProductList/BasketProductList"
 import BasketTotal from "./BasketTotal/BasketTotal"
-import {
-  purchaseCalculatorClasses,
-  createPurchaseCalculatorStyles,
-} from "./PurchaseCalculator.styles"
-
-import { useState } from "react"
 import { dmPalette, useDark } from "@/theme"
 import { MONTHS } from "@/constants/months"
 import { PRICE_DATA } from "@/services/demo/data"
+import {
+  priceMarkets,
+  hasCompleteHistory,
+  basketHistory,
+} from "@/business/priceAnalysis"
 
-type PurchaseCalculatorProps = {
-  products: string[]
-  markets: string[]
-  market: string
-  onMarketChange: (market: string) => void
-  onClose: () => void
-}
-
-export default function PurchaseCalculator({
-  products,
-  markets: allMktNames,
-  market: calcMkt,
-  onMarketChange: setCalcMkt,
-  onClose,
-}: PurchaseCalculatorProps) {
+export default function PurchaseCalculator() {
   const pal = dmPalette(useDark())
-  const [calcSelected, setCalcSelected] = useState<string[]>([])
-
-  // Basket time series: sum selected products' prices for calcMkt at each month
-
-  const basketSeries: number[] = MONTHS.map((_, mi) =>
-    calcSelected.reduce(
-      (sum, p) => sum + (PRICE_DATA[p]?.[calcMkt]?.[mi] ?? 0),
-      0,
-    ),
-  )
-
-  const firstVal = basketSeries[0] || 0
-
-  const lastVal = basketSeries.at(-1) || 0
-
-  const variation = firstVal > 0 ? ((lastVal - firstVal) / firstVal) * 100 : 0
-
-  function toggleProduct(product: string) {
-    setCalcSelected((previous) =>
-      previous.includes(product)
-        ? previous.filter((item) => item !== product)
-        : [...previous, product],
+  const markets = priceMarkets(PRICE_DATA)
+  const [market, setMarket] = useState(markets[0] ?? "")
+  const [selected, setSelected] = useState<string[]>([])
+  const [notice, setNotice] = useState("")
+  const products = Object.keys(PRICE_DATA)
+  const series = basketHistory(PRICE_DATA, selected, market, MONTHS.length)
+  const first = series?.[0] ?? 0
+  const total = series?.at(-1) ?? 0
+  const variation = first > 0 ? ((total - first) / first) * 100 : 0
+  function changeMarket(value: string) {
+    const remaining = selected.filter((product) =>
+      hasCompleteHistory(PRICE_DATA[product]?.[value], MONTHS.length),
     )
+    setNotice(
+      remaining.length !== selected.length
+        ? "Produtos sem histórico completo neste mercado foram retirados da seleção."
+        : "",
+    )
+    setSelected(remaining)
+    setMarket(value)
   }
-
-  const styles = createPurchaseCalculatorStyles(pal)
-
   return (
-    <div
-      className={purchaseCalculatorClasses.overlay}
-      style={styles.overlay}
-      onClick={onClose}
-    >
-      <div
-        className={purchaseCalculatorClasses.sheet}
-        style={styles.sheet}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className={purchaseCalculatorClasses.handleContainer}>
-          <div
-            className={purchaseCalculatorClasses.handle}
-            style={styles.handle}
-          />
-        </div>
-
-        <CalculatorHeader
-          markets={allMktNames}
-          market={calcMkt}
-          onMarketChange={setCalcMkt}
-          onClose={onClose}
-        />
-        <div className={purchaseCalculatorClasses.content}>
-          {/* Basket chart — shown when ≥1 product selected */}
-          {calcSelected.length > 0 && (
-            <BasketSummary
-              palette={pal}
-              productCount={calcSelected.length}
-              market={calcMkt}
-              total={lastVal}
-              variation={variation}
-              series={basketSeries}
-            />
-          )}
-
-          <BasketProductList
-            palette={pal}
-            products={products}
-            selectedProducts={calcSelected}
-            market={calcMkt}
-            onToggleProduct={toggleProduct}
-          />
-        </div>
-
-        <BasketTotal
-          productCount={calcSelected.length}
-          market={calcMkt}
-          total={lastVal}
+    <div className="space-y-5">
+      <CalculatorHeader
+        markets={markets}
+        market={market}
+        onMarketChange={changeMarket}
+      />
+      {notice && (
+        <p
+          role="status"
+          className="text-xs"
+          style={{ color: pal.textSecondary }}
+        >
+          {notice}
+        </p>
+      )}
+      {!selected.length ? (
+        <p
+          role="status"
+          className="rounded-2xl border p-4 text-sm"
+          style={{
+            background: pal.card,
+            borderColor: pal.border,
+            color: pal.textSecondary,
+          }}
+        >
+          Selecione produtos abaixo para acompanhar a evolução do valor da sua
+          cesta neste mercado.
+        </p>
+      ) : series ? (
+        <BasketSummary
+          palette={pal}
+          productCount={selected.length}
+          market={market}
+          total={total}
           variation={variation}
+          series={series}
         />
-      </div>
+      ) : (
+        <p
+          role="status"
+          className="text-sm"
+          style={{ color: pal.textSecondary }}
+        >
+          Histórico insuficiente para calcular esta cesta.
+        </p>
+      )}
+      <BasketProductList
+        palette={pal}
+        products={products}
+        selectedProducts={selected}
+        market={market}
+        onToggleProduct={(product) => {
+          if (!hasCompleteHistory(PRICE_DATA[product]?.[market], MONTHS.length))
+            return
+          setSelected((previous) =>
+            previous.includes(product)
+              ? previous.filter((value) => value !== product)
+              : [...previous, product],
+          )
+        }}
+      />
+      {series && (
+        <div className="overflow-hidden rounded-2xl">
+          <BasketTotal
+            productCount={selected.length}
+            market={market}
+            total={total}
+            variation={variation}
+          />
+        </div>
+      )}
     </div>
   )
 }
