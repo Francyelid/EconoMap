@@ -1,180 +1,102 @@
+﻿import { useId, useState } from "react"
 import PricesHeader from "./PricesHeader/PricesHeader"
-import PriceFilters from "./PriceFilters/PriceFilters"
-import CalculatorAction from "./CalculatorAction/CalculatorAction"
-import ProductSelector from "./ProductSelector/ProductSelector"
-import MarketSelector from "./MarketSelector/MarketSelector"
-import PriceChartCard from "./PriceChartCard/PriceChartCard"
-import type { PricePeriod } from "./types"
+import ProductPricesPanel from "./ProductPricesPanel"
+import PurchaseCalculator from "./PurchaseCalculator/PurchaseCalculator"
 import {
   pricesScreenClasses,
   createPricesScreenStyles,
 } from "./PricesScreen.styles"
-import PurchaseCalculator from "./PurchaseCalculator/PurchaseCalculator"
-
-import CheapestMarket from "./CheapestMarket/CheapestMarket"
-
-import PriciestMarket from "./PriciestMarket/PriciestMarket"
-
-import { useState } from "react"
 import { dmPalette, useDark } from "@/theme"
-import { PRICE_DATA } from "@/services/demo/data"
-import SeasonalInsight from "./SeasonalInsight/SeasonalInsight"
+import { ICONS } from "@/constants/icons"
 
+const tabs = [
+  { key: "product", label: "Por produto", icon: ICONS.package },
+  { key: "basket", label: "Por cesta", icon: ICONS.basket },
+] as const
 export default function PricesScreen() {
-  const dark = useDark()
-  const pal = dmPalette(dark)
-
-  const products = Object.keys(PRICE_DATA)
-
-  const allMktNames = [
-    "Todos",
-    ...Array.from(
-      new Set(Object.values(PRICE_DATA).flatMap((d) => Object.keys(d))),
-    ),
-  ]
-
-  const [selProduct, setSelProduct] = useState(products[0])
-
-  const productData = PRICE_DATA[selProduct]
-
-  const allMarkets = Object.keys(productData)
-
-  const [selMarkets, setSelMarkets] = useState(allMarkets.slice(0, 3))
-
-  const [search, setSearch] = useState("")
-
-  const [mktFilter, setMktFilter] = useState("Todos")
-
-  const [maxPriceFilter, setMaxPriceFilter] = useState("")
-
-  const [periodFilter, setPeriodFilter] = useState<PricePeriod>("all")
-
-  const [dateFrom, setDateFrom] = useState("")
-
-  const [dateTo, setDateTo] = useState("")
-
-  const [showCalc, setShowCalc] = useState(false)
-
-  const [calcMkt, setCalcMkt] = useState(allMktNames[1] ?? allMktNames[0])
-
-  function handleSelectProduct(product: string) {
-    setSelProduct(product)
-    setSelMarkets(Object.keys(PRICE_DATA[product]).slice(0, 3))
-  }
-
-  const toggle = (m: string) => {
-    setSelMarkets((prev) =>
-      prev.includes(m) ? prev.filter((x) => x !== m) : [...prev, m],
-    )
-  }
-
-  const periodSlice = (arr: number[]) => {
-    if (periodFilter === "all" || periodFilter === "custom") return arr
-
-    const n = periodFilter === "7d" ? 7 : periodFilter === "30d" ? 30 : 90
-
-    return arr.slice(-n)
-  }
-
-  const latest = selMarkets
-
-    .filter((m) => productData[m])
-
-    .map((m) => ({ market: m, price: periodSlice(productData[m]).at(-1) ?? 0 }))
-
-  const cheapest =
-    latest.length > 0
-      ? latest.reduce((a, b) => (a.price < b.price ? a : b))
-      : null
-
-  const priciest =
-    latest.length > 0
-      ? latest.reduce((a, b) => (a.price > b.price ? a : b))
-      : null
-
-  const filteredProducts = products.filter((p) => {
-    if (search && !p.toLowerCase().includes(search.toLowerCase())) return false
-
-    if (
-      mktFilter !== "Todos" &&
-      !Object.keys(PRICE_DATA[p]).includes(mktFilter)
-    )
-      return false
-
-    if (maxPriceFilter) {
-      const last = Object.values(PRICE_DATA[p]).map((v) => v.at(-1) ?? 0)
-
-      if (last.every((v) => v > parseFloat(maxPriceFilter))) return false
-    }
-
-    return true
-  })
-
+  const pal = dmPalette(useDark())
   const styles = createPricesScreenStyles(pal)
-
+  const [active, setActive] = useState<"product" | "basket">("product")
+  const id = useId()
   return (
     <div className={pricesScreenClasses.screen} style={styles.screen}>
       <PricesHeader palette={pal} />
-
-      <PriceFilters
-        palette={pal}
-        search={search}
-        setSearch={setSearch}
-        mktFilter={mktFilter}
-        setMktFilter={setMktFilter}
-        maxPriceFilter={maxPriceFilter}
-        setMaxPriceFilter={setMaxPriceFilter}
-        periodFilter={periodFilter}
-        setPeriodFilter={setPeriodFilter}
-        dateFrom={dateFrom}
-        setDateFrom={setDateFrom}
-        dateTo={dateTo}
-        setDateTo={setDateTo}
-        allMktNames={allMktNames}
-      />
-
-      <CalculatorAction onOpen={() => setShowCalc(true)} />
-
-      <ProductSelector
-        products={filteredProducts}
-        selectedProduct={selProduct}
-        onSelectProduct={handleSelectProduct}
-      />
-
-      <MarketSelector
-        markets={allMarkets}
-        selectedMarkets={selMarkets}
-        onToggleMarket={toggle}
-      />
-
-      <PriceChartCard
-        palette={pal}
-        product={selProduct}
-        markets={selMarkets}
-        period={periodFilter}
-      />
-
-      {/* Stat cards */}
-      {cheapest && priciest && cheapest.market !== priciest.market && (
-        <div className={pricesScreenClasses.stats}>
-          <CheapestMarket market={cheapest.market} price={cheapest.price} />
-          <PriciestMarket market={priciest.market} price={priciest.price} />
-        </div>
-      )}
-
-      {/* Seasonal insight */}
-      <SeasonalInsight product={selProduct} />
-
-      {/* ── Calcular Compras modal ── */}
-      {showCalc && (
-        <PurchaseCalculator
-          products={products}
-          markets={allMktNames}
-          market={calcMkt}
-          onMarketChange={setCalcMkt}
-          onClose={() => setShowCalc(false)}
-        />
-      )}
+      <div
+        role="tablist"
+        aria-label="Análise de preços"
+        className="grid grid-cols-2 gap-1 rounded-2xl border p-1"
+        style={{ background: pal.card, borderColor: pal.border }}
+      >
+        {tabs.map((tab, index) => (
+          <button
+            key={tab.key}
+            type="button"
+            role="tab"
+            id={`${id}-${tab.key}-tab`}
+            aria-selected={active === tab.key}
+            aria-controls={`${id}-${tab.key}-panel`}
+            tabIndex={active === tab.key ? 0 : -1}
+            className="flex min-h-11 items-center justify-center gap-2 rounded-xl px-3 py-3 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-green-600"
+            style={{
+              background: active === tab.key ? pal.green : "transparent",
+              color: active === tab.key ? "#fff" : pal.textSecondary,
+            }}
+            onClick={() => setActive(tab.key)}
+            onKeyDown={(event) => {
+              let next: number | undefined
+              if (event.key === "ArrowRight" || event.key === "ArrowLeft")
+                next = 1 - index
+              if (event.key === "Home") next = 0
+              if (event.key === "End") next = 1
+              if (next !== undefined) {
+                event.preventDefault()
+                setActive(tabs[next].key)
+                event.currentTarget.parentElement
+                  ?.querySelectorAll<HTMLButtonElement>('[role="tab"]')
+                  [next]?.focus()
+              }
+            }}
+          >
+            {tab.icon}
+            {tab.label}
+          </button>
+        ))}
+      </div>
+      <p
+        id={`${id}-description`}
+        className="flex items-start gap-2 text-xs leading-relaxed"
+        style={{ color: pal.textSecondary }}
+      >
+        <span className="mt-0.5 shrink-0" aria-hidden="true">
+          {ICONS.info}
+        </span>
+        <span>
+          {active === "product"
+            ? "Compare o preço de um mesmo produto entre diferentes mercados."
+            : "Acompanhe a evolução do valor total de um conjunto de produtos em um mercado."}
+        </span>
+      </p>
+      {/* Os dois painéis permanecem montados para preservar seleções e buscas. */}
+      <section
+        role="tabpanel"
+        id={`${id}-product-panel`}
+        aria-labelledby={`${id}-product-tab`}
+        aria-describedby={`${id}-description`}
+        hidden={active !== "product"}
+        tabIndex={0}
+      >
+        <ProductPricesPanel />
+      </section>
+      <section
+        role="tabpanel"
+        id={`${id}-basket-panel`}
+        aria-labelledby={`${id}-basket-tab`}
+        aria-describedby={`${id}-description`}
+        hidden={active !== "basket"}
+        tabIndex={0}
+      >
+        <PurchaseCalculator />
+      </section>
     </div>
   )
 }

@@ -1,54 +1,49 @@
-import {
-  calculatorHeaderClasses,
-  createCalculatorHeaderStyles,
-} from "./CalculatorHeader.styles"
+﻿import { useId } from "react"
+import { dmPalette, useDark } from "@/theme"
 
-type CalculatorHeaderProps = {
+type Props = {
   markets: string[]
   market: string
   onMarketChange: (market: string) => void
-  onClose: () => void
 }
-
 export default function CalculatorHeader({
-  markets: allMktNames,
-  market: calcMkt,
-  onMarketChange: setCalcMkt,
-  onClose,
-}: CalculatorHeaderProps) {
-  const styles = createCalculatorHeaderStyles()
+  markets,
+  market,
+  onMarketChange,
+}: Props) {
+  const id = useId()
+  const pal = dmPalette(useDark())
   return (
-    <div className={calculatorHeaderClasses.header} style={styles.header}>
-      <div className={calculatorHeaderClasses.headerRow}>
-        <h2 className={calculatorHeaderClasses.title} style={styles.title}>
-          Calcular Compras
-        </h2>
-        <button
-          onClick={onClose}
-          className={calculatorHeaderClasses.closeButton}
-          style={styles.closeButton}
-        >
-          ✕
-        </button>
-      </div>
-      <p className={calculatorHeaderClasses.caption} style={styles.caption}>
-        Selecione produtos e um mercado para ver a variação da cesta ao longo do
-        tempo
-      </p>
-      {/* Market selector */}
-      <select
-        className={calculatorHeaderClasses.marketSelect}
-        style={styles.marketSelect}
-        value={calcMkt}
-        onChange={(e) => setCalcMkt(e.target.value)}
+    <div className="space-y-2">
+      <label
+        htmlFor={id}
+        className="block text-xs font-semibold"
+        style={{ color: pal.textSecondary }}
       >
-        {allMktNames
-          .filter((m) => m !== "Todos")
-          .map((m) => (
-            <option key={m} style={styles.marketOption}>
-              {m}
-            </option>
-          ))}
+        Estabelecimento da cesta
+      </label>
+      <select
+        id={id}
+        value={market}
+        disabled={markets.length === 0}
+        onChange={(event) => onMarketChange(event.target.value)}
+        className="min-h-11 w-full min-w-0 rounded-xl border px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-green-600"
+        style={{
+          background: pal.inputBg,
+          borderColor: pal.border,
+          color: pal.textPrimary,
+        }}
+      >
+        {markets.length === 0 && (
+          <option value="">
+            Nenhum estabelecimento com histórico disponível
+          </option>
+        )}
+        {markets.map((value) => (
+          <option key={value} value={value}>
+            {value}
+          </option>
+        ))}
       </select>
     </div>
   )

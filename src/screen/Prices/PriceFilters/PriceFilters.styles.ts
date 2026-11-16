@@ -1,34 +1,39 @@
-import { sharedClasses, sharedStyles } from "@/screen/shared/styles"
-import type { CSSProperties } from "react"
 import type { dmPalette } from "@/theme"
+import { sharedStyles } from "@/screen/shared/styles"
 
 export const priceFiltersClasses = {
-  filters: sharedClasses.list,
-  search: sharedClasses.spaciousSearchContainer,
-  searchInput: sharedClasses.searchInput,
-  clearButton: sharedClasses.smallText,
-  filterRow: sharedClasses.filterRow,
-  marketSelect: sharedClasses.select,
-  maxPrice: "flex items-center gap-1 rounded-xl px-3 py-2",
-  maxPriceLabel: sharedClasses.tinyBoldText,
-  maxPriceInput: "w-14 bg-transparent text-xs font-mono font-bold outline-none",
-  periodGroup: sharedClasses.filterGroup,
-  periodButton: "flex-1 py-2 text-[11px] font-bold transition-all",
-  dateRow: "flex gap-2 items-center",
-  dateField: sharedClasses.fill,
-  dateLabel: "text-[10px] font-bold uppercase tracking-widest mb-1 block",
-  dateInput: "w-full rounded-xl px-3 py-2 text-xs outline-none",
+  filters: "space-y-3 pt-3",
+  heading: "flex items-center justify-between gap-2",
+  title: "text-xs font-bold",
+  clearButton:
+    "min-h-8 rounded-lg px-2 text-[11px] font-semibold focus-visible:outline-2 focus-visible:outline-green-600",
+  field: "min-w-0 space-y-1.5",
+  label: "block text-[11px] font-semibold",
+  search:
+    "flex min-h-11 items-center gap-2 rounded-xl border px-3 focus-within:ring-2 focus-within:ring-green-600/20",
+  searchInput: "w-full min-w-0 bg-transparent py-2.5 text-sm outline-none",
+  periodField: "min-w-0 space-y-2.5 border-t pt-2",
+  periodGroup: "grid grid-cols-2 gap-1 rounded-xl p-1",
+  periodButton:
+    "flex min-h-11 min-w-0 items-center justify-center gap-1.5 rounded-lg px-2 py-2 text-[11px] font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-green-600",
+  dateRow: "grid grid-cols-1 gap-3 min-[360px]:grid-cols-2",
+  dateInput:
+    "min-h-11 w-full min-w-0 rounded-xl px-2 py-2 text-xs outline-none",
 } as const
 
 export function createPriceFiltersStyles(pal: ReturnType<typeof dmPalette>) {
   return {
+    card: { background: pal.card, borderColor: pal.border },
     primaryText: sharedStyles.primaryText(pal),
     secondaryText: sharedStyles.secondaryText(pal),
-    search: sharedStyles.searchContainer(pal),
-    mutedText: sharedStyles.mutedText(pal),
+    accent: { color: pal.green },
+    search: { background: pal.inputBg, borderColor: pal.border },
     input: sharedStyles.input(pal),
-    border: sharedStyles.border(pal),
-    periodButton: (selected: boolean): CSSProperties =>
-      sharedStyles.selectedFilter(pal, selected),
+    divider: { borderColor: pal.divider },
+    surface: { background: pal.cardAlt },
+    periodButton: (active: boolean) => ({
+      background: active ? pal.green : "transparent",
+      color: active ? "#fff" : pal.textSecondary,
+    }),
   }
 }

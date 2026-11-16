@@ -1,18 +1,14 @@
+import { useId } from "react"
 import { ICONS } from "@/constants/icons"
 import {
-  priceFiltersClasses,
+  priceFiltersClasses as classes,
   createPriceFiltersStyles,
 } from "./PriceFilters.styles"
 import type { dmPalette } from "@/theme"
-import { sharedChartAppearance } from "@/screen/shared/styles"
 import type { PricePeriod } from "../types"
 
 type PriceFiltersProps = {
   palette: ReturnType<typeof dmPalette>
-  search: string
-  setSearch: (value: string) => void
-  mktFilter: string
-  setMktFilter: (value: string) => void
   maxPriceFilter: string
   setMaxPriceFilter: (value: string) => void
   periodFilter: PricePeriod
@@ -21,15 +17,10 @@ type PriceFiltersProps = {
   setDateFrom: (value: string) => void
   dateTo: string
   setDateTo: (value: string) => void
-  allMktNames: string[]
 }
 
 export default function PriceFilters({
-  palette: pal,
-  search,
-  setSearch,
-  mktFilter,
-  setMktFilter,
+  palette,
   maxPriceFilter,
   setMaxPriceFilter,
   periodFilter,
@@ -38,122 +29,124 @@ export default function PriceFilters({
   setDateFrom,
   dateTo,
   setDateTo,
-  allMktNames,
 }: PriceFiltersProps) {
-  const styles = createPriceFiltersStyles(pal)
+  const styles = createPriceFiltersStyles(palette)
+  const id = useId()
+  const hasFilters =
+    !!maxPriceFilter || periodFilter !== "all" || !!dateFrom || !!dateTo
+  function clear() {
+    setMaxPriceFilter("")
+    setPeriodFilter("all")
+    setDateFrom("")
+    setDateTo("")
+  }
   return (
-    <div className={priceFiltersClasses.filters}>
-      <div className={priceFiltersClasses.search} style={styles.search}>
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke={styles.secondaryText.color}
-          strokeWidth="2.5"
-          strokeLinecap={sharedChartAppearance.lineCap}
-        >
-          <circle cx="11" cy="11" r="8" />
-          <line x1="21" y1="21" x2="16.65" y2="16.65" />
-        </svg>
-        <input
-          className={priceFiltersClasses.searchInput}
-          style={styles.primaryText}
-          placeholder="Buscar produto…"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        {search && (
+    <div className={classes.filters}>
+      <div className={classes.heading}>
+        {hasFilters && (
           <button
-            onClick={() => setSearch("")}
-            className={priceFiltersClasses.clearButton}
-            style={styles.mutedText}
+            type="button"
+            className={classes.clearButton}
+            style={styles.accent}
+            onClick={clear}
           >
-            ✕
+            Limpar filtros
           </button>
         )}
       </div>
-      <div className={priceFiltersClasses.filterRow}>
-        <select
-          className={priceFiltersClasses.marketSelect}
-          style={styles.input}
-          value={mktFilter}
-          onChange={(e) => setMktFilter(e.target.value)}
+      <div className={classes.field}>
+        <label
+          htmlFor={`${id}-price`}
+          className={classes.label}
+          style={styles.secondaryText}
         >
-          {allMktNames.map((m) => (
-            <option key={m}>{m}</option>
-          ))}
-        </select>
-        <div className={priceFiltersClasses.maxPrice} style={styles.search}>
-          <span
-            className={priceFiltersClasses.maxPriceLabel}
-            style={styles.secondaryText}
-          >
-            Até R$
+          Preço máximo <span className="font-normal">(opcional)</span>
+        </label>
+        <div className={classes.search} style={styles.search}>
+          <span className="text-xs font-semibold" style={styles.secondaryText}>
+            R$
           </span>
           <input
+            id={`${id}-price`}
             type="number"
-            className={priceFiltersClasses.maxPriceInput}
+            min="0"
+            step="0.01"
+            inputMode="decimal"
+            className={classes.searchInput}
             style={styles.primaryText}
-            placeholder="—"
+            placeholder="Sem limite"
             value={maxPriceFilter}
-            onChange={(e) => setMaxPriceFilter(e.target.value)}
+            onChange={(event) => setMaxPriceFilter(event.target.value)}
           />
         </div>
       </div>
-      {/* Period filter */}
-      <div className={priceFiltersClasses.periodGroup} style={styles.border}>
-        {([
-          { k: "all", l: "Tudo" },
-
-          { k: "custom", l: <>{ICONS.calendar} Data específica</> },
-        ] as const).map(({ k, l }) => (
-          <button
-            key={k}
-            onClick={() => setPeriodFilter(k)}
-            className={priceFiltersClasses.periodButton}
-            style={styles.periodButton(periodFilter === k)}
-          >
-            {l}
-          </button>
-        ))}
-      </div>
-      {/* Custom date range */}
-      {periodFilter === "custom" && (
-        <div className={priceFiltersClasses.dateRow}>
-          <div className={priceFiltersClasses.dateField}>
-            <label
-              className={priceFiltersClasses.dateLabel}
-              style={styles.secondaryText}
+      <fieldset className={classes.periodField} style={styles.divider}>
+        <legend className={classes.label} style={styles.secondaryText}>
+          Período do histórico
+        </legend>
+        <p className="text-[10px] leading-relaxed" style={styles.secondaryText}>
+          Os dados de demonstração são mensais, de janeiro a agosto de 2026. O
+          intervalo inclui os meses das datas escolhidas.
+        </p>
+        <div className={classes.periodGroup} style={styles.surface}>
+          {([
+            { key: "all", label: "Todo o período" },
+            { key: "custom", label: "Escolher datas" },
+          ] as const).map((option) => (
+            <button
+              key={option.key}
+              type="button"
+              aria-pressed={periodFilter === option.key}
+              className={classes.periodButton}
+              style={styles.periodButton(periodFilter === option.key)}
+              onClick={() => setPeriodFilter(option.key)}
             >
-              De
-            </label>
-            <input
-              type="date"
-              className={priceFiltersClasses.dateInput}
-              style={styles.input}
-              value={dateFrom}
-              onChange={(e) => setDateFrom(e.target.value)}
-            />
-          </div>
-          <div className={priceFiltersClasses.dateField}>
-            <label
-              className={priceFiltersClasses.dateLabel}
-              style={styles.secondaryText}
-            >
-              Até
-            </label>
-            <input
-              type="date"
-              className={priceFiltersClasses.dateInput}
-              style={styles.input}
-              value={dateTo}
-              min={dateFrom}
-              onChange={(e) => setDateTo(e.target.value)}
-            />
-          </div>
+              {option.key === "custom" && ICONS.calendar}
+              {option.label}
+            </button>
+          ))}
         </div>
-      )}
+        {periodFilter === "custom" && (
+          <div className={classes.dateRow}>
+            <div className={classes.field}>
+              <label
+                htmlFor={`${id}-from`}
+                className={classes.label}
+                style={styles.secondaryText}
+              >
+                Data inicial
+              </label>
+              <input
+                id={`${id}-from`}
+                type="date"
+                className={classes.dateInput}
+                style={styles.input}
+                value={dateFrom}
+                max={dateTo || undefined}
+                onChange={(event) => setDateFrom(event.target.value)}
+              />
+            </div>
+            <div className={classes.field}>
+              <label
+                htmlFor={`${id}-to`}
+                className={classes.label}
+                style={styles.secondaryText}
+              >
+                Data final
+              </label>
+              <input
+                id={`${id}-to`}
+                type="date"
+                className={classes.dateInput}
+                style={styles.input}
+                value={dateTo}
+                min={dateFrom}
+                onChange={(event) => setDateTo(event.target.value)}
+              />
+            </div>
+          </div>
+        )}
+      </fieldset>
     </div>
   )
 }
